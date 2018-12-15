@@ -1,0 +1,51 @@
+/* æ¸…é™¤å†…å¤–è¾¹è· */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements ç»“æž„å…ƒç´  */
+dl, dt, dd, ul, ol, li, /* list elements åˆ—è¡¨å…ƒç´  */
+pre, /* text formatting elements æ–‡æœ¬æ ¼å¼å…ƒç´  */
+fieldset, lengend, button, input, textarea, /* form elements è¡¨å•å…ƒç´  */
+th, td { /* table elements è¡¨æ ¼å…ƒç´  */
+margin: 0;
+padding: 0; }
+body,button,input,select,textarea { font-size: 12px; font-family: PingFang Medium, "Microsoft YaHei", "PingFang SC", Arial, "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; }
+
+* { -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+h1,h2,h3,h4,h5,h6 { font-size: 100%; }
+
+ul,ol { list-style: none; }
+
+a { text-decoration: none; color: #333; }
+a:link, a:visited, a:hover, a:active { text-decoration: none; }
+
+fieldset,img { border: 0; }
+
+button,input,select,textarea { font-size: 100%; outline: none; }
+input:focus { outline: none; }
+
+/*åŽ»æŽ‰inputåœ¨type="number"æ—¶çš„ä¸Šä¸‹å°ç®­å¤´*/
+input[type=number] { -moz-appearance:textfield; }
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+.left { float: left; }
+.right { float: right; }
+.clearfix { clear:both; }
+.clearfix:after { clear: both; content:" "; display: block; font-size: 0; height: 0; visibility: hidden; }
+/* for IE6 */
+*html .clearfix { zoom:1; }
+/* for IE7 */
+*+html .clearfix { zoom:1; }
+
+
+/*分页*/
+.page { display: table; height: 80px; line-height: 80px; margin: 0 auto; }
+.page li { margin: 0 12px; float: left; }
+.page li a.first,
+.page li a.last { font-size: 14px; color: #333; }
+.page li a.first:hover,
+.page li a.last:hover { color: #3fabfa; }
+.page li a.item { display: inline-block; width: 30px; height: 30px; line-height: 30px; background-color: #eee; color: #333; font-size: 14px; text-align: center; -webkit-border-radius: 50%; -moz-border-radius: 50%; -o-border-radius: 50%; border-radius: 50%; }
+.page li a.item:hover { background-color: #3fabfa; color: #fff; }
+.page li a.item.active { background-color: #3fabfa; color: #fff; }

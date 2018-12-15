@@ -22,19 +22,55 @@ import Layout from '../views/layout/Layout'
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/userLogin/index'), hidden: true },
+  { path: '/login', name: 'userLogin', component: () => import('@/views/userLogin/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
+
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   name: 'Dashboard',
+  //   hidden: true,
+  //   children: [{
+  //     path: 'dashboard',
+  //     component: () => import('@/views/dashboard/index')
+  //   }]
+  // },
 
   {
     path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    name: 'Dashboard',
+    component: () => import('@/views/index/index'),
+    redirect: '/index',
     hidden: true,
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
-    }]
+    children: [
+      {
+        path: '/index',
+        name: 'index',
+        component: () => import('@/views/index/components/index')
+      },
+      {
+        path: '/details',
+        name: 'details',
+        component: () => import('@/views/details/index')
+      },
+      {
+        path: '/houseList',
+        name: 'houseList',
+        component: () => import('@/views/houseList/index')
+      },
+      {
+        path: '/my',
+        name: 'my',
+        component: () => import('@/views/mySelf/index')
+      }
+    ]
+  },
+
+  {
+    path: '/details',
+    component: () => import('@/views/details/index'),
+    name: 'details',
+    hidden: true
   },
 
   {
