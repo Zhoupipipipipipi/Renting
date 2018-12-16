@@ -22,21 +22,21 @@ import Layout from '../views/layout/Layout'
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', name: 'userLogin', component: () => import('@/views/userLogin/index'), hidden: true },
+  { path: '/userLogin', name: 'userLogin', component: () => import('@/views/userLogin/index'), hidden: true },
+  { path: '/login', name: 'login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/dashboard',
-  //   name: 'Dashboard',
-  //   hidden: true,
-  //   children: [{
-  //     path: 'dashboard',
-  //     component: () => import('@/views/dashboard/index')
-  //   }]
-  // },
-
+  {
+    path: '/userIndex',
+    component: Layout,
+    redirect: '/dashboard',
+    name: 'Dashboard',
+    hidden: true,
+    children: [{
+      path: 'dashboard',
+      component: () => import('@/views/dashboard/index')
+    }]
+  },
   {
     path: '/',
     component: () => import('@/views/index/index'),
@@ -74,23 +74,14 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/example',
+    path: '/houserManager',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'houserManager',
+        name: 'houserManager',
+        component: () => import('@/views/houserManager/index'),
+        meta: { title: '房屋管理', icon: 'table' }
       }
     ]
   },
@@ -103,7 +94,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        meta: { title: '统计管理', icon: 'form' }
       }
     ]
   },

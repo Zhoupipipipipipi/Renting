@@ -1,0 +1,43 @@
+.tablePaging {
+  height: 52px;
+  text-align: right;
+  padding: 10px;
+}
+
+.formSearch {
+  border-radius: 5px;
+  overflow: hidden;
+  .el-form-item {
+    margin: 10px 0px !important;
+  }
+  > div, > form {
+    background: white;
+    padding: 0px 10px;
+    margin-bottom: 5px;
+  }
+}
+
+.tableContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// .dialog {
+//   @media screen and (min-width: $sm) {
+//     /deep/ .el-dialog {
+//       width: 50% !important;
+//     }
+//   }
+//   @media screen and (min-width: $md) {
+//     /deep/ .el-dialog {
+//       width: 30% !important;
+//     }
+//   }
+
+//   /deep/ .form-body {
+//     width: 80%;
+//     margin: 0px auto;
+//   }
+// }
