@@ -20,14 +20,18 @@ export default {
   data() {
     return {
       loading: false,
-      peopleTableList: [],
+      peopleTableList: [
+      ],
       tableNameList: [
-        { id: 'xm', name: '姓名' },
-        { id: 'xb', name: '性别' },
-        { id: 'sfzjlx', name: '身份证件类型' },
-        { id: 'sfzjhm', name: '身份证件号码' },
-        { id: 'lxdh', name: '联系电话' },
-        { id: 'adminArea', name: '所属单位' }
+        { id: 'name', name: '发布人' },
+        { id: 'housename', housename: '房子名称' },
+        { id: 'area', name: '面积' },
+        { id: 'apartment', name: '户型' },
+        { id: 'floor', name: '楼层' },
+        { id: 'region', name: '区域' },
+        { id: 'address', name: '地址' },
+        { id: 'price', name: '价格' },
+        { id: 'phonenumber', name: '联系电话' }
       ],
       currentOp: 'add',
       btnList: {

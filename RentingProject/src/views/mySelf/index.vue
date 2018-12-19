@@ -39,76 +39,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr v-for="item in houseList" :key="item.housenumber">
                         <td class="house-info-td">
-                            <a href="/fang/102006.html" target="_blank" class="clearfix">
+                            <router-link to="/fang/102006.html" target="_blank" class="clearfix">
                                 <div class="house-img left">
-                                    <img src="https://img2.zuke.com/u/1002092/2018121219384881232.jpg">
+                                    <img :src="item.picture">
                                 </div>
                                 <div class="house-info left">
-                                    <p class="f16 bold c-333 twoEllipsis">急转租主卧！！桃源居怡宝花园合租房带厨房卫生间采光好交通便利</p>
-                                    <p class="f14 c-666">35㎡ / 4室4厅</p>
+                                    <p class="f16 bold c-333 twoEllipsis">{{item.housename}}</p>
+                                    <p class="f14 c-666">{{item.area}}㎡ / {{item.apartment}}</p>
                                 </div>
-                            </a>
+                            </router-link>
                         </td>
                         <td class="rent-td">
-                            <p class="tcenter f14 c-ff5555">1300元/月</p>
+                            <p class="tcenter f14 c-ff5555">{{item.price}}元/月</p>
                         </td>
                         <td class="num-td">
-                            <p class="tcenter f14 c-333">可租</p>                        </td>
+                            <p class="tcenter f14 c-333">可租</p></td>
                         <td class="time-td tcenter">
-                            <p class="c-333 f14">2018-12-12</p>
+                            <p class="c-333 f14">{{item.date}}</p>
                         </td>
                         <td class="tcenter">
                             <p class="del f14 c-3fabfa cursor-pointer" data-id="835">删除</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="house-info-td">
-                            <a href="/fang/101968.html" target="_blank" class="clearfix">
-                                <div class="house-img left">
-                                    <img src="https://img2.zuke.com/u/1003819/2018121021183616713.jpg">
-                                </div>
-                                <div class="house-info left">
-                                    <p class="f16 bold c-333 twoEllipsis">新秀地铁站附近 芳春花园小区</p>
-                                    <p class="f14 c-666">15㎡ / 1室1厅</p>
-                                </div>
-                            </a>
-                        </td>
-                        <td class="rent-td">
-                            <p class="tcenter f14 c-ff5555">1200元/月</p>
-                        </td>
-                        <td class="num-td">
-                            <p class="tcenter f14 c-333">可租</p>                        </td>
-                        <td class="time-td tcenter">
-                            <p class="c-333 f14">2018-12-10</p>
-                        </td>
-                        <td class="tcenter">
-                            <p class="del f14 c-3fabfa cursor-pointer" data-id="836">删除</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="house-info-td">
-                            <a href="/fang/101937.html" target="_blank" class="clearfix">
-                                <div class="house-img left">
-                                    <img src="https://img2.zuke.com/u/1002654/2018120912080636302.jpg">
-                                </div>
-                                <div class="house-info left">
-                                    <p class="f16 bold c-333 twoEllipsis">员工宿舍大特惠空间7500</p>
-                                    <p class="f14 c-666">95㎡ / 3室3厅</p>
-                                </div>
-                            </a>
-                        </td>
-                        <td class="rent-td">
-                            <p class="tcenter f14 c-ff5555">7500元/月</p>
-                        </td>
-                        <td class="num-td">
-                            <p class="tcenter f14 c-333">可租</p>                        </td>
-                        <td class="time-td tcenter">
-                            <p class="c-333 f14">2018-12-09</p>
-                        </td>
-                        <td class="tcenter">
-                            <p class="del f14 c-3fabfa cursor-pointer" data-id="837">删除</p>
                         </td>
                     </tr>
                 </tbody>
@@ -118,6 +70,50 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      houseList: [
+        {
+          housenumber: 1,
+          housename: '新秀地铁站附近 芳春花园小区',
+          picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
+          area: '15',
+          apartment: '1室0厅1卫',
+          price: '1200',
+          address: '芳春花园',
+          date: '12-10',
+          describe: '学校附近，有电梯'
+        },
+        {
+          housenumber: 2,
+          housename: '新秀地铁站附近 芳春花园小区',
+          picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
+          area: '15',
+          apartment: '1室0厅1卫',
+          price: '1200',
+          address: '芳春花园',
+          date: '12-10',
+          describe: '学校附近，有电梯'
+        },
+        {
+          housenumber: 3,
+          housename: '新秀地铁站附近 芳春花园小区',
+          picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
+          area: '15',
+          apartment: '1室0厅1卫',
+          price: '1200',
+          address: '芳春花园',
+          date: '12-10',
+          describe: '学校附近，有电梯'
+        }
+      ]
+    }
+  }
+}
+</script>
+
 <style>
 /*会员中心*/
 /*顶部*/

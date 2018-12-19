@@ -6,57 +6,48 @@
                  label-position="right">
           <div class="item">
             <el-col :span="12">
-              <el-form-item label="姓名" prop="xm">
-                <el-input v-model="personItem.xm" placeholder="姓名"></el-input>
+              <el-form-item label="发布人" prop="name">
+                <el-input v-model="personItem.name" placeholder="发布人"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="性别" prop="xb">
-                <el-radio v-model="personItem.xb" label="男">男</el-radio>
-                <el-radio v-model="personItem.xb" label="女">女</el-radio>
-              </el-form-item>
-            </el-col>
-          </div>
-          <div class="item">
-            <el-col :span="12">
-              <el-form-item label="密码" prop="mm">
-                <el-input v-model="personItem.mm" placeholder="密码" type="password"></el-input>
-                <span class="pass-tip">默认密码：yy123456</span>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="确认密码" prop="newmm">
-                <el-input v-model="personItem.newmm" placeholder="确认密码" type="password"></el-input>
+              <el-form-item label="房子名称" prop="housename">
+                <el-input v-model="personItem.housename" placeholder="房子名称"></el-input>
               </el-form-item>
             </el-col>
           </div>
           <div class="item">
             <el-col :span="12">
-              <el-form-item label="身份证类型" prop="sfzjlx">
-                <el-select v-model="personItem.sfzjlx" placeholder="身份证类型">
-                  <el-option
-                    v-for="item in sfzjlx"
-                    :key="item"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select>
+              <el-form-item label="面积" prop="area">
+                <el-input v-model="personItem.area" placeholder="面积"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="身份证件号码" prop="sfzjhm">
-                <el-input v-model="personItem.sfzjhm" placeholder="身份证件号码"></el-input>
+              <el-form-item label="户型" prop="apartment">
+                <el-input v-model="personItem.apartment" placeholder="户型"></el-input>
               </el-form-item>
             </el-col>
           </div>
           <div class="item">
             <el-col :span="12">
-              <el-form-item label="联系电话" prop="lxdh">
-                <el-input v-model="personItem.lxdh" placeholder="联系电话"></el-input>
+              <el-form-item label="楼层" prop="floor">
+                <el-input v-model="personItem.floor" placeholder="户型"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="所属单位" prop="adminArea">
+              <el-form-item label="价格" prop="price">
+                <el-input v-model="personItem.price" placeholder="价格"></el-input>
+              </el-form-item>
+            </el-col>
+          </div>
+          <div class="item">
+            <el-col :span="12">
+              <el-form-item label="联系电话" prop="phonenumber">
+                <el-input v-model="personItem.phonenumber" placeholder="联系电话"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="区域" prop="region">
                 <el-select v-model="city.value" v-if="city.show" placeholder="请选择市" class="item-search" @change="changeCity" value-key="id" style="width:100px">
                     <el-option
                     v-for="item in city.options"
@@ -76,6 +67,14 @@
               </el-form-item>
             </el-col>
           </div>
+          <div class="item">
+
+            <el-col :span="12">
+              <el-form-item label="地址" prop="address">
+                <el-input v-model="personItem.address" placeholder="地址"></el-input>
+              </el-form-item>
+            </el-col>
+          </div>
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
@@ -92,76 +91,35 @@
   export default {
     name: 'DialogPanel',
     data() {
-      const checkPhone = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('手机号不能为空'))
-        } else {
-          const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
-          if (reg.test(value)) {
-            callback()
-          } else {
-            return callback(new Error('请输入正确的手机号'))
-          }
-        }
-      }
-      const idCardPass = (rule, value, callback) => {
-        const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
-        if (value === '') {
-          callback(new Error('身份证号不能为空'))
-        } else if (!reg.test(value)) {
-          callback(new Error('请输入正确的身份证号'))
-        } else {
-          callback()
-        }
-      }
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'))
-        } else {
-          if (this.personItem.newmm !== '') {
-            this.$refs.personItem.validateField('newmm')
-          }
-          callback()
-        }
-      }
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== this.personItem.mm) {
-          callback(new Error('两次输入密码不一致!'))
-        } else {
-          callback()
-        }
-      }
       return {
         title: '',
         roleShow: false,
         ssdqFormShow: false, // 是否显示地区选择
         rules: {
-          xm: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          xb: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          sfzjlx: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          sfzjhm: [
-            { required: true, validator: idCardPass, trigger: 'blur' }
-          ],
-          lxdh: [
-            { required: true, validator: checkPhone, trigger: 'blur' }
-          ],
-          adminArea: [
-            { required: true, message: '必填', trigger: 'blur' }
-          ],
-          mm: [
-            { required: true, validator: validatePass, trigger: 'blur' }
-          ],
-          newmm: [
-            { required: true, validator: validatePass2, trigger: 'blur' }
-          ]
+          // xm: [
+          //   { required: true, message: '必填', trigger: 'blur' }
+          // ],
+          // xb: [
+          //   { required: true, message: '必填', trigger: 'blur' }
+          // ],
+          // sfzjlx: [
+          //   { required: true, message: '必填', trigger: 'blur' }
+          // ],
+          // sfzjhm: [
+          //   { required: true, validator: idCardPass, trigger: 'blur' }
+          // ],
+          // lxdh: [
+          //   { required: true, validator: checkPhone, trigger: 'blur' }
+          // ],
+          // adminArea: [
+          //   { required: true, message: '必填', trigger: 'blur' }
+          // ],
+          // mm: [
+          //   { required: true, validator: validatePass, trigger: 'blur' }
+          // ],
+          // newmm: [
+          //   { required: true, validator: validatePass2, trigger: 'blur' }
+          // ]
         },
         personItem: {
           id: '',

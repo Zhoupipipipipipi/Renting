@@ -31,16 +31,7 @@
                     <div class="criteria-item clearfix" name="area">
                         <span class="left">热门区域</span>
                         <div class="left">
-                            <a href="/fang?district=1016">福田</a>
-                            <a href="/fang?district=1017">罗湖</a>
-                            <a href="/fang?district=1018">南山</a>
-                            <a href="/fang?district=1019">盐田</a>
-                            <a href="/fang?district=1020">宝安</a>
-                            <a href="/fang?district=1021">龙岗</a>
-                            <a href="/fang?district=1022">龙华</a>
-                            <a href="/fang?district=1023">坪山</a>
-                            <a href="/fang?district=1024">光明新区</a>
-                            <a href="/fang?district=1025">大鹏新区</a>
+                            <router-link to="" v-for="item in search.area" :key="item.id">{{item.name}}</router-link>
                         </div>
                     </div>
                     <div class="criteria-item clearfix hide" name="metro">
@@ -311,6 +302,25 @@
         </div>
     </el-container>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      search: {
+        area: [
+          { id: 1, name: '福田' },
+          { id: 2, name: '罗湖' },
+          { id: 3, name: '南山' },
+          { id: 4, name: '宝安' },
+          { id: 5, name: '龙华' },
+          { id: 6, name: '龙岗' }
+        ]
+      }
+    }
+  }
+}
+</script>
+
 <style>
 /*列表页*/
 .criteria-box { position: relative; margin-bottom: 20px; padding: 20px 0 10px; background-color: #fff; border: 1px solid #eee; }

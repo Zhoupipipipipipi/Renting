@@ -27,50 +27,17 @@
                     <div class="criteria-box" name="1001">
                         <div class="subsection">
                             <span class="subsection-item active" name="area">区域找房</span>
-                            <span class="subsection-item" name="metro">地铁找房</span>
                         </div>
                         <div class="criteria-item clearfix" name="area">
                             <span class="left">热门区域</span>
                             <div class="left">
-                                <a href="/fang?district=1016">福田</a>
-                                <a href="/fang?district=1017">罗湖</a>
-                                <a href="/fang?district=1018">南山</a>
-                                <a href="/fang?district=1019">盐田</a>
-                                <a href="/fang?district=1020">宝安</a>
-                                <a href="/fang?district=1021">龙岗</a>
-                                <a href="/fang?district=1022">龙华</a>
-                                <a href="/fang?district=1023">坪山</a>
-                                <a href="/fang?district=1024">光明新区</a>
-                                <a href="/fang?district=1025">大鹏新区</a>
-                            </div>
-                        </div>
-                        <div class="criteria-item clearfix hide" name="metro">
-                            <span class="left">地铁</span>
-                            <div class="left">
-                                <a href="/fang?line=1">1号线</a>
-                                <a href="/fang?line=31">2号线</a>
-                                <a href="/fang?line=56">3号线</a>
-                                <a href="/fang?line=87">4号线</a>
-                                <a href="/fang?line=103">5号线</a>
-                                <a href="/fang?line=131">7号线</a>
-                                <a href="/fang?line=160">9号线</a>
-                                <a href="/fang?line=184">11号线</a>
+                                <router-link to="" v-for="item in search.area" :key="item.id">{{item.name}}</router-link>
                             </div>
                         </div>
                         <div class="criteria-item clearfix">
                             <span class="left">租金</span>
                             <div class="left">
-                                <a href="/fang?rentstart=&amp;rentend=1000">1000元以下</a>
-                                <a href="/fang?rentstart=1000&amp;rentend=2000">1000-2000元</a>
-                                <a href="/fang?rentstart=2000&amp;rentend=3000">2000-3000元</a>
-                                <a href="/fang?rentstart=3000&amp;rentend=4000">3000-4000元</a>
-                                <a href="/fang?rentstart=4000&amp;rentend=5000">4000-5000元</a>
-                                <a href="/fang?rentstart=5000&amp;rentend=6000">5000-6000元</a>
-                                <a href="/fang?rentstart=6000&amp;rentend=7000">6000-7000元</a>
-                                <a href="/fang?rentstart=7000&amp;rentend=8000">7000-8000元</a>
-                                <a href="/fang?rentstart=8000&amp;rentend=9000">8000-9000元</a>
-                                <a href="/fang?rentstart=9000&amp;rentend=10000">9000-10000元</a>
-                                <a href="/fang?rentstart=10000&amp;rentend=">10000元以上</a>
+                                <router-link to="" v-for="item in search.money" :key="item.id">{{item.name}}</router-link>
                                 <span class="range middle">
                         <input class="fang-rentstart" type="text" value="">
                         <span class="f14 c-333 ml8">-</span>
@@ -82,37 +49,7 @@
                         <div class="criteria-item clearfix">
                             <span class="left">户型</span>
                             <div class="left">
-                                <a href="/fang?bedroom=1">一室</a>
-                                <a href="/fang?bedroom=2">两室</a>
-                                <a href="/fang?bedroom=3">三室</a>
-                                <a href="/fang?bedroom=4">四室</a>
-                                <a href="/fang?bedroom=5">四室以上</a>
-                            </div>
-                        </div>
-                        <div class="criteria-item clearfix">
-                            <span class="left">特色</span>
-                            <div class="left">
-                                <a href="/fang?characteristic=%E6%8B%8E%E5%8C%85%E5%85%A5%E4%BD%8F">拎包入住</a>
-                                <a href="/fang?characteristic=%E9%A6%96%E6%AC%A1%E5%87%BA%E7%A7%9F">首次出租</a>
-                                <a href="/fang?characteristic=%E9%87%87%E5%85%89%E5%A5%BD">采光好</a>
-                                <a href="/fang?characteristic=%E5%81%9C%E8%BD%A6%E4%BD%8D%E5%A4%9A">停车位多</a>
-                                <a href="/fang?characteristic=%E5%9C%B0%E9%93%81%E5%8F%A3%E9%99%84%E8%BF%91">地铁口附近</a>
-                                <a href="/fang?characteristic=%E5%95%86%E4%B8%9A%E8%A1%97%E9%99%84%E8%BF%91">商业街附近</a>
-                                <a href="/fang?characteristic=%E5%AD%A6%E6%A0%A1%E9%99%84%E8%BF%91">学校附近</a>
-                                <a href="/fang?characteristic=%E6%9C%89%E7%94%B5%E6%A2%AF">有电梯</a>
-                                <a href="/fang?characteristic=%E6%9C%89%E9%98%B3%E5%8F%B0">有阳台</a>
-                                <a href="/fang?characteristic=%E6%9C%89%E8%8A%B1%E5%9B%AD">有花园</a>
-                                <a href="/fang?characteristic=%E6%9C%89%E9%98%81%E6%A5%BC">有阁楼</a>
-                                <a href="/fang?characteristic=%E6%9C%89%E5%9C%B0%E4%B8%8B%E5%AE%A4">有地下室</a>
-                            </div>
-                        </div>
-                        <div class="criteria-item clearfix mb10">
-                            <span class="left">装修</span>
-                            <div class="left">
-                                <a href="/fang?decoration=%E8%B1%AA%E5%8D%8E%E8%A3%85%E4%BF%AE">豪华装修</a>
-                                <a href="/fang?decoration=%E4%B8%AD%E7%AD%89%E8%A3%85%E4%BF%AE">中等装修</a>
-                                <a href="/fang?decoration=%E6%99%AE%E9%80%9A%E8%A3%85%E4%BF%AE">普通装修</a>
-                                <a href="/fang?decoration=%E6%97%A0%E8%A3%85%E4%BF%AE">无装修</a>
+                                <router-link to="" v-for="item in search.roomType" :key="item.id">{{item.name}}</router-link>
                             </div>
                         </div>
                     </div>
@@ -125,6 +62,32 @@
 <script>
 import HouseList from '@/views/houseList/index'
 export default {
+  data() {
+    return {
+      search: {
+        area: [
+          { id: 1, name: '肇庆学院' },
+          { id: 2, name: '广东金融学院' },
+          { id: 3, name: '广东工业大学' },
+          { id: 4, name: '华南理工学院' }
+        ],
+        money: [
+          { id: 1, name: '1000-2000元' },
+          { id: 2, name: '2000-3000元' },
+          { id: 3, name: '3000-4000元' },
+          { id: 4, name: '4000-5000元' },
+          { id: 5, name: '5000-6000元' }
+        ],
+        roomType: [
+          { id: 1, name: '一室' },
+          { id: 2, name: '两室' },
+          { id: 3, name: '三室' },
+          { id: 4, name: '四室' },
+          { id: 5, name: '四室以上' }
+        ]
+      }
+    }
+  },
   components: {
     HouseList
   }
@@ -133,7 +96,7 @@ export default {
 <style>
 /*首页*/
 .home .nav { border-bottom: none; }
-.home .banner { position: relative; width: 100%; min-width: 1200px; height: 550px; background: url(../../../assets/img/home-banner.png) left top / 100% 100% fixed no-repeat; }
+.home .banner { position: relative; width: 100%; min-width: 1200px; height: 440px; background: url(../../../assets/img/home-banner.png) left top / 100% 100% fixed no-repeat; }
 .home .banner .search-box { position: absolute; left: 50%; top: 34px; width: 1200px; border: 1px solid #eee; margin: 10px 0 50px -600px; background-color: #fff; -webkit-border-radius: 10px; -moz-border-radius: 10px; -ms-border-radius: 10px; border-radius: 10px; overflow: hidden; }
 .home .banner .search-box .top { display: inline-block; width: 100%; height: 125px; background-color: #ebf2f9; }
 .home .banner .search-box .top .summ-word { margin: 10px 0; }
@@ -152,7 +115,7 @@ export default {
 .home .banner .search-box .top form input { font-size: 14px; color: #333; border: none; line-height: 44px; height: 44px; background-color: #f9f9f9; }
 .home .banner .search-box .top form input:-webkit-autofill { -webkit-box-shadow: 0 0 0 1000px #f9f9f9 inset; }
 .home .banner .search-box .top form .search-btn { width: 85px; height: 44px; float: right; background: #3fabfa url(../../../assets/img/search-white-icon.png) center center / auto 50% no-repeat; cursor: pointer; border-top-right-radius: 44px; border-bottom-right-radius: 44px; }
-.home .banner .search-box .bottom { width: 100%; height: 330px; }
+.home .banner .search-box .bottom { width: 100%; height: 200px; }
 .home .banner .search-box .bottom .category { width: 140px; height: 100%; background-color: #ebf2f9; }
 .home .banner .search-box .bottom .category .item { width: 140px; height: 110px; line-height: 110px; text-align: center; font-size: 16px; color: #666; background-color: #ebf2f9; border-right: 1px solid #fff; border-bottom: 1px solid #fff; cursor: pointer; }
 .home .banner .search-box .bottom .category .item:last-child { border-bottom: none; }

@@ -1,7 +1,7 @@
 <template>
     <div class="main details-box">
         <div class="tit-box clearfix">
-            <div class="bold title left twoEllipsis">新秀地铁站附近 芳春花园小区</div>
+            <div class="bold title left twoEllipsis">{{houseDetail.housename}}</div>
             <div class="btns left f0 middle">
                 <span class="follow">关注房源</span>
                 <span class="yuyue">预约看房</span>
@@ -18,48 +18,41 @@
         </div>
         <div class="main-info clearfix">
             <div class="carousel clearfix left">
-                <div class="swiper-slide swiper-slide-active" style="width: 100%;"><img class="zooming-switch" src="https://img2.zuke.com/u/1003819/2018121021183616713_600_432.jpg" data-src="https://img2.zuke.com/u/1003819/2018121021183616713.jpg" alt=""></div>
+                <div class="swiper-slide swiper-slide-active" style="width: 100%;"><img class="zooming-switch" :src="houseDetail.picture" alt=""></div>
             </div>
             <div class="info left">
-                <p class="c-ff5555 line-h1"><span class="f26 bold">1200</span><span class="f18">元/月</span></p>
+                <p class="c-ff5555 line-h1"><span class="f26 bold">{{houseDetail.price}}</span><span class="f18">元/月</span></p>
                 <div class="detail-room">
                     <p>
-                        <span class="f14"><span class="c-999">面积：</span><span class="c-333">15㎡</span></span>
-                        <span class="f14"><span class="c-999">户型：</span><span class="c-333">1室0厅1卫</span></span>
+                        <span class="f14"><span class="c-999">面积：</span><span class="c-333">{{houseDetail.area}}㎡</span></span>
+                        <span class="f14"><span class="c-999">户型：</span><span class="c-333">{{houseDetail.apartment}}</span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">方式：</span><span class="c-333">押二月付</span></span>
-                        <span class="f14"><span class="c-999">时间：</span><span class="c-333">2018-12-10</span></span>
+                        <span class="f14"><span class="c-999">方式：</span><span class="c-333">{{houseDetail.pay}}</span></span>
+                        <span class="f14"><span class="c-999">时间：</span><span class="c-333">{{houseDetail.date}}</span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">装修：</span><span class="c-333">豪华装修</span></span>
-                        <span class="f14"><span class="c-999">楼层：</span><span class="c-333">1/8层 (朝南)</span></span>
+                        <span class="f14"><span class="c-999">楼层：</span><span class="c-333">{{houseDetail.floor}}层 </span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">编号：</span><span class="c-333">101968</span></span>
-                        <span class="f14"><span class="c-999">区域：</span><span class="c-333">黄贝岭-芳春花园</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="c-3fabfa" href="/fang?search=%E8%8A%B3%E6%98%A5%E8%8A%B1%E5%9B%AD">(共1套在租住宅)</a></span>
+                        <span class="f14"><span class="c-999">编号：</span><span class="c-333">{{houseDetail.housenumber}}</span></span>
+                        <span class="f14"><span class="c-999">区域：</span><span class="c-333">{{houseDetail.region}}</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="c-3fabfa" href="/fang?search=%E8%8A%B3%E6%98%A5%E8%8A%B1%E5%9B%AD">(共1套在租住宅)</a></span>
                     </p>
-                    <div class="addr f14 clearfix"><span class="c-999 left">地址：</span><span class="c-333 left">深圳罗湖芳春花园3栋1一单元</span></div>
+                    <div class="addr f14 clearfix"><span class="c-999 left">地址：</span><span class="c-333 left">{{houseDetail.address}}</span></div>
                 </div>
                 <p class="fang-notes clearfix">
-                    <span class="fang-note list-note-type9">拎包入住</span>
-                    <span class="fang-note list-note-type1">采光好</span>
-                    <span class="fang-note list-note-type8">地铁口附近</span>
-                    <span class="fang-note list-note-type5">商业街附近</span>
-                    <span class="fang-note list-note-type4">学校附近</span>
-                    <span class="fang-note list-note-type3">有阳台</span>
-                    <span class="fang-note list-note-type5">有花园</span>
+                    <span class="fang-note list-note-type9">{{houseDetail.describe}}</span>
                 </p>
                 <p class="f16 c-333 bold mb10 mt6">发布人</p>
                 <div class="fabu-man clearfix">
                     <div class="fabu-avatar radiusHalf left"><img src="https://img2.zuke.com/avatar/101/03.jpg" alt=""></div>
                     <div class="left ml12">
-                        <p class="mt4 f18 c-333">高先生</p>
+                        <p class="mt4 f18 c-333">{{houseDetail.name}}</p>
                     </div>
                 </div>
                 <div class="customer-hot-line middle">
                     <span class="f16 c-333">咨询热线：</span>
-                    <span class="f16 c-ff5555">0755-2209-0000</span>
+                    <span class="f16 c-ff5555">{{houseDetail.phonenumber}}</span>
                 </div>
                 <div class="important-tip clearfix">
                     <div class="left tit">
@@ -117,7 +110,7 @@
             </div>
         </div>
         <p class="f16 c-333 bold mtb20 plr20">房源描述</p>
-        <div class="plr20 c-333 f14">芳春花园小区，新秀地铁卡旁边，距离100米，100米左右附近有华润万家等大超市</div>
+        <div class="plr20 c-333 f14">{{houseDetail.describe}}</div>
         <p class="f16 c-333 bold mtb20 plr20">图片观看</p>
         <div class="pic-big-list mtb20 plr20">
             <div class="swiper-wrapper">
@@ -129,6 +122,31 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      houseDetail: {
+        housenumber: 3,
+        housename: '新秀地铁站附近 芳春花园小区',
+        picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
+        area: '15',
+        apartment: '1室0厅1卫',
+        price: '1200',
+        address: '芳春花园',
+        date: '12-10',
+        describe: '拎包入住 采光好 地铁口附近 商业街附近 学校附近 有阳台 有花园',
+        region: '黄贝岭-芳春花园',
+        floor: '1/8',
+        pay: '押二月付',
+        name: '高先生',
+        phonenumber: '18865925412'
+      }
+    }
+  }
+}
+</script>
+
 <style>
 /*详情*/
 .details-box { margin-bottom: 30px; background-color: #fff; border: 1px solid #eee; }
