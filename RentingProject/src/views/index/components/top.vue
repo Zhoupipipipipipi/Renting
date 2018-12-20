@@ -25,8 +25,9 @@
                     </ul>
                         <span class="left f16 c-333">
                             <span class="nav-log">
-                                <router-link to="/login">登录</router-link>
-                            </span><span> | </span><span class="nav-reg">注册</span>
+                                <router-link to="/userLogin">登录</router-link>
+                            </span>
+                            <span> | </span><span class="nav-reg" @click="showRegister=true">注册</span>
                         </span>
                     <span class="fabu-btn left">发布
                         <div class="fabu-btn-box hide" style="display: none;">
@@ -38,10 +39,28 @@
                 </div>
             </div>
         </div>
+        <register v-if="showRegister" @closeRegister="closeRegister"></register>
     </div>
 </template>
+<script>
+import Register from '../../register/index'
+export default {
+  data() {
+    return {
+      showRegister: false
+    }
+  },
+  components: {
+    Register
+  },
+  methods: {
+    closeRegister() {
+      this.showRegister = false
+    }
+  }
+}
+</script>
 <style>
-
 /*顶部*/
 .nav { width: 100%; height: 100px; border-bottom: 2px solid #3fabfa; background-color: #fff; }
 .nav .main { height: 100px; }
