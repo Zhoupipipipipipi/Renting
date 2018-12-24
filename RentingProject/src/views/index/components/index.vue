@@ -13,9 +13,14 @@
                                 </ul>
                             </dd>
                         </dl>
-                        <input name="search" id="search" placeholder="请输入区域、小区名、标题等搜索条件" type="text">
-                        <input class="search-btn" value="" type="submit">
+                        <el-input id="search" placeholder="请输入高校名字" type="text" v-model="searchSchool" v-on:input="getSearchSchool"></el-input>
+                        <!-- <input class="search-btn" value="" type="submit"> -->
                     </form>
+                    <el-card class="box-card search-school-box" v-if="search.searchList.length>0">
+                        <div v-for="item in search.searchList" :key="item.name" class="text item" @click="chooseThisSchool(item)">
+                            {{ item.name }}
+                        </div>
+                    </el-card>
                     <p class="summ-word tcenter f14"><i class="icon news-red-icon"></i><span class="c-333">今日新闻：今日新增房源</span><span class="c-ff5555">263</span><span class="c-333">套，总计271046套，入驻合伙人</span><span class="c-ff5555">23154</span><span class="c-333">人</span></p>
                 </div>
                 <div class="bottom">
@@ -31,7 +36,8 @@
                         <div class="criteria-item clearfix" name="area">
                             <span class="left">热门区域</span>
                             <div class="left">
-                                <router-link to="" v-for="item in search.area" :key="item.id">{{item.name}}</router-link>
+                                <router-link to="" v-for="(item, $index) in search.area" :key="item.id" v-if="$index<10||showMore">{{item.name}}</router-link>
+                                <span @click="showAny" class="show-more">更多</span>
                             </div>
                         </div>
                         <div class="criteria-item clearfix">
@@ -61,6 +67,8 @@
 </template>
 <script>
 import HouseList from '@/views/houseList/index'
+import { getSearchSchool } from '@/api/index'
+import { CityToSchool } from '@/api/index'
 export default {
   data() {
     return {
@@ -84,12 +92,56 @@ export default {
           { id: 3, name: '三室' },
           { id: 4, name: '四室' },
           { id: 5, name: '四室以上' }
-        ]
-      }
+        ],
+        searchSchool: '', // 查询高校名字
+        searchList: [] // 查询高校下拉列表
+      },
+      searchSchool: '',
+      CityName: this.$route.params.CityName,
+      CityList: [],
+      showMore: false
     }
   },
   components: {
     HouseList
+  },
+  watch: {
+    $route(to, from) {
+      console.log(to.params.CityName)
+      this.CityName = to.params.CityName
+      this.CityToSchool()
+    }
+  },
+  methods: {
+    getSearchSchool() { // 获取学校数据列表
+      const reg = /^[\u4e00-\u9fa5]+$/
+      if (!reg.test(this.searchSchool)) {
+        this.search.searchList = []
+        return
+      }
+      console.log(this.searchSchool)
+      getSearchSchool(this.searchSchool).then(result => {
+        if (this.searchSchool !== '') {
+          this.search.searchList = result
+        }
+      })
+    },
+    chooseThisSchool(item) { // 点击选中该学校
+      this.searchSchool = item.name
+      this.search.searchList = []
+    },
+    showAny() {
+      console.log('!!!!')
+      this.showMore = !this.showMore
+    },
+    CityToSchool() {
+      CityToSchool(this.CityName).then(result => {
+        this.search.area = result
+      })
+    }
+  },
+  mounted() {
+    this.CityToSchool()
   }
 }
 </script>
@@ -240,4 +292,31 @@ z-index: 5; padding: 0 0 0 4px; width: 204px; height: 36px; background-color: #f
 .list-box .list .list-item .list-info { width: 638px; height: 100%; padding: 10px 0; float: left; }
 .list-box .list .list-item .list-info .location-icon { width: 10px; height: 16px; margin-right: 8px; }
 .list-box .list .list-item .list-info .fang-notes { height: 27px; overflow: hidden; }
+.search-school-box{
+    position: absolute;
+    z-index: 10;
+    overflow-y: scroll;
+    height: 200px;
+    font-size: 16px;
+    line-height: 2;
+    right: 17px;
+    top: 62px;
+    left: 125px;
+}
+.search-box .el-input{
+    position: relative;
+    width: 900px;
+    display: inline-block;
+    color: #333;
+    font-size: 14px;
+    float: left;
+}
+.show-more{
+    margin-right: 20px;
+    font-size: 14px;
+    color: #333;
+    float: left;
+    color: #0C9DF9;
+    cursor: pointer;
+}
 </style>

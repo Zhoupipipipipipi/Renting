@@ -26,25 +26,25 @@ export const constantRouterMap = [
   { path: '/login', name: 'login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
-  {
-    path: '/userIndex',
-    component: Layout,
-    redirect: '/dashboard',
-    name: 'Dashboard',
-    hidden: true,
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
-    }]
-  },
+  // {
+  //   path: '/userIndex',
+  //   component: Layout,
+  //   redirect: '/dashboard', // 重定向
+  //   name: 'Dashboard',
+  //   hidden: true,
+  //   children: [{
+  //     path: 'dashboard',
+  //     component: () => import('@/views/dashboard/index')
+  //   }]
+  // },
   {
     path: '/',
     component: () => import('@/views/index/index'),
-    redirect: '/index',
+    redirect: '/index/肇庆市', // 重定向
     hidden: true,
-    children: [
+    children: [ // 子路由
       {
-        path: '/index',
+        path: '/index/:CityName',
         name: 'index',
         component: () => import('@/views/index/components/index')
       },
@@ -65,14 +65,6 @@ export const constantRouterMap = [
       }
     ]
   },
-
-  {
-    path: '/details',
-    component: () => import('@/views/details/index'),
-    name: 'details',
-    hidden: true
-  },
-
   {
     path: '/houserManager',
     component: Layout,

@@ -71,12 +71,12 @@ export default {
       }
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
+      this.$refs.loginForm.validate(valid => { // 表单验证
+        if (valid) { // 验证成功
+          this.loading = true // 加载中
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false
-            this.$router.push({ path: '/' })
+            this.$router.push({ path: '/' }) // 链接跳转
           }).catch(() => {
             this.loading = false
           })

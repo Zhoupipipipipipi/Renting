@@ -2,7 +2,8 @@
     <div class="nav">
         <div class="main clearfix">
             <div class="nav-logo left"><a href="/" style="display:block;width:126px;height:40px;"></a></div>
-            <div class="nav-city left"><i class="icon location-deep-icon"></i><span>深圳</span></div>
+            <el-cascader class="nav-city left" size="large" :options="options" v-model="selectedOptions"  @change="handleChange">
+            </el-cascader>
             <div class="nav-right right">
                 <div class="nav-top right">
                     <i class="icon phone-blue-icon phone"></i>
@@ -44,10 +45,17 @@
 </template>
 <script>
 import Register from '../../register/index'
+import { provinceAndCityData, CodeToText } from 'element-china-area-data'
+// import { CityToSchool } from '@/api/index'
 export default {
   data() {
     return {
-      showRegister: false
+      showRegister: false,
+      options: provinceAndCityData,
+      selectedOptions: ['440000', '441200'],
+      CityName: '',
+      CityList: []
+
     }
   },
   components: {
@@ -56,6 +64,15 @@ export default {
   methods: {
     closeRegister() {
       this.showRegister = false
+    },
+    handleChange(value) {
+      console.log(value)
+      if (CodeToText[value[1]] === '市辖区') {
+        this.CityName = CodeToText[value[0]]
+      } else {
+        this.CityName = CodeToText[value[1]]
+      }
+      this.$router.push({ name: 'index', params: { CityName: this.CityName }})
     }
   }
 }
@@ -66,7 +83,7 @@ export default {
 .nav .main { height: 100px; }
 .nav .main .nav-logo { display: inline-block; width: 126px; height: 40px; margin-top: 32px; background: url(../../../assets/img/logo.png) center center / 100% 100% no-repeat; }
 /* .nav .main .nav-logo::after {background: url(../../assets/img/duigou-icon.png);} */
-.nav .main .nav-city { margin: 50px 0 0 20px; cursor: pointer; }
+.nav .main .nav-city { margin: 30px 0 0 20px; cursor: pointer; }
 .nav .main .nav-city > * { vertical-align: middle; }
 .nav .main .nav-city i { width: 14px; height: 18px; }
 .nav .main .nav-city span { font-size: 18px; color: #333; margin-left: 7px; }

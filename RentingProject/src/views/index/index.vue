@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <top></top>
@@ -5,10 +6,11 @@
     </div>
 </template>
 <script>
+ // eslint-disable-next-line no-undef
 import Top from './components/top'
 export default {
-  components: {
-    Top
-  }
+   components: {
+     Top
+   }
 }
 </script>
