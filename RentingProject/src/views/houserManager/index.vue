@@ -51,7 +51,8 @@ export default {
   methods: {
     addSubmit(msg) { // 添加
       this.currentOp = msg
-      this.$refs.dialogPanel.show()
+      this.$router.push({ name: 'editDetails' })
+      // this.$refs.dialogPanel.show()
     },
     delSubmit(msg) { // 删除
       const info = this.$refs.personTable.handleSelectionChange() // 拿到选中的数据
@@ -81,7 +82,8 @@ export default {
     },
     changeInfo(msg) { // 修改
       this.currentOp = 'edit'
-      this.$refs.dialogPanel.show(msg)
+      this.$router.push({ name: 'editDetails' })
+      // this.$refs.dialogPanel.show(msg)
     },
     search(msg) { // 查询
       this.xm = msg.name

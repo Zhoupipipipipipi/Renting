@@ -21,24 +21,44 @@
                 <div class="swiper-slide swiper-slide-active" style="width: 100%;"><img class="zooming-switch" :src="houseDetail.picture" alt=""></div>
             </div>
             <div class="info left">
-                <p class="c-ff5555 line-h1"><span class="f26 bold">{{houseDetail.price}}</span><span class="f18">元/月</span></p>
+                <p class="c-ff5555 line-h1"><span class="f26 bold"><el-input v-model="houseDetail.price" placeholder="价格" size="mini" style="width: 120px; margin-right: 10px;"></el-input></span><span class="f18">元/月</span></p>
                 <div class="detail-room">
                     <p>
-                        <span class="f14"><span class="c-999">面积：</span><span class="c-333">{{houseDetail.area}}㎡</span></span>
-                        <span class="f14"><span class="c-999">户型：</span><span class="c-333">{{houseDetail.apartment}}</span></span>
+                        <span class="f14"><span class="c-999">面积：</span><span class="c-333"><el-input v-model="houseDetail.area" placeholder="面积" size="mini" style="width: 50px; margin-right: 10px"></el-input></span>㎡</span>
+                        <span class="f14"><span class="c-999">户型：</span><span class="c-333">
+                            <el-select v-model="houseDetail.apartment" placeholder="请选择户型" size="mini" style="width: 120px;">
+                                <el-option
+                                v-for="item in apartmentOptions"
+                                :key="item.value"
+                                :label="item.value"
+                                :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">方式：</span><span class="c-333">{{houseDetail.pay}}</span></span>
-                        <span class="f14"><span class="c-999">入住时间：</span><span class="c-333">{{houseDetail.date}}</span></span>
+                        <span class="f14"><span class="c-999">方式：</span><span class="c-333">
+                            <el-select v-model="houseDetail.pay" placeholder="请选择方式" size="mini" style="width: 100px;">
+                                <el-option
+                                v-for="item in payOptions"
+                                :key="item.value"
+                                :label="item.value"
+                                :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </span></span>
+                        <span class="f14"><span class="c-999">入住时间：</span><span class="c-333">
+                            <el-date-picker v-model="houseDetail.date" type="date" placeholder="入住时间" size="mini" style="width: 150px;"></el-date-picker>
+                        </span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">楼层：</span><span class="c-333">{{houseDetail.floor}}层 </span></span>
+                        <span class="f14"><span class="c-999">楼层：</span><span class="c-333"><el-input v-model="houseDetail.floor" placeholder="楼层" size="mini" style="width: 50px; margin-right: 10px;"></el-input>层 </span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">编号：</span><span class="c-333">{{houseDetail.housenumber}}</span></span>
-                        <span class="f14"><span class="c-999">区域：</span><span class="c-333">{{houseDetail.region}}</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="c-3fabfa" href="/fang?search=%E8%8A%B3%E6%98%A5%E8%8A%B1%E5%9B%AD">(共1套在租住宅)</a></span>
+                        <span class="f14"><span class="c-999">编号：</span><span class="c-333"><el-input v-model="houseDetail.housenumber" placeholder="编号" size="mini" style="width: 100px;"></el-input></span></span>
+                        <span class="f14"><span class="c-999">区域：</span><span class="c-333"><el-input v-model="houseDetail.region" placeholder="区域：" size="mini" style="width: 150px;"></el-input></span></span>
                     </p>
-                    <div class="addr f14 clearfix"><span class="c-999 left">地址：</span><span class="c-333 left">{{houseDetail.address}}</span></div>
+                    <div class="addr f14 clearfix"><span class="c-999 left">地址：</span><span class="c-333 left"><el-input v-model="houseDetail.address" placeholder="地址" size="mini" style="width: 200px;"></el-input></span></div>
                 </div>
                 <p class="fang-notes clearfix">
                     <span class="fang-note list-note-type9">{{houseDetail.describe}}</span>
@@ -141,7 +161,17 @@ export default {
         pay: '押二月付',
         name: '高先生',
         phonenumber: '18865925412'
-      }
+      },
+      apartmentOptions: [
+        { value: '1室1厅1卫' },
+        { value: '1室2厅1卫' },
+        { value: '1室3厅1卫' },
+        { value: '1室4厅2卫' }
+      ],
+      payOptions: [
+        { value: '押二付一' },
+        { value: '押一付一' }
+      ]
     }
   }
 }
