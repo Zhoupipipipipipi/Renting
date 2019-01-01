@@ -77,7 +77,11 @@ export const constantRouterMap = [
       }
     ]
   },
-
+  {
+    path: '/editDetails',
+    name: 'editDetails',
+    component: () => import('@/views/changeDetails/index')
+  },
   {
     path: '/form',
     component: Layout,
