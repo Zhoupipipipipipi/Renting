@@ -6,39 +6,32 @@
                 <ul class="sign-ul reg">
                     <li class="clearfix">
                         <i class="icon phone-icon left"></i>
-                        <p class="left"><input class="mobile" type="text" placeholder="请输入手机号码">
-                            <button class="get-code regcode">获取验证码</button>
+                        <p class="left"><input class="mobile" type="text" placeholder="请输入手机号码" v-model="person.phone">
                         </p>
                     </li>
                     <li class="clearfix">
                         <i class="icon aut-code-icon left"></i>
-                        <p class="left"><input class="sms-code" type="text" placeholder="请输入验证码"></p>
+                        <p class="left"><input class="sms-code" type="text" placeholder="请输入用户名" v-model="person.loginName"></p>
                     </li>
                     <li class="clearfix">
                         <i class="icon password-icon left"></i>
-                        <p class="left"><input class="pwd" type="password" placeholder="请输入密码"></p>
+                        <p class="left"><input class="pwd" type="password" placeholder="请输入密码" v-model="person.password"></p>
                     </li>
                     <li class="clearfix">
                         <i class="icon portrait-blue-icon left"></i>
-                        <p class="surname-p left"><input class="surname" type="text" placeholder="姓氏"></p>
-                        <span class="f12 c-666 left edit-line lh-36">（选填）</span>
                         <span class="ml20 left edit-line lh-36 middle">
-                            <span class="radio-box"><input type="radio" id="gender-female" name="sign-gender" value="2">
+                            <span class="radio-box"><input type="radio" id="gender-female" name="sign-gender" value="0" v-model="person.role">
                                 <label for="gender-female"></label>
                             </span>
-                            <label for="gender-female" class="f14 c-333 ml8">女士</label>
-                            <span class="radio-box ml8"><input type="radio" id="gender-male" name="sign-gender" value="1" checked="checked">
+                            <label for="gender-female" class="f14 c-333 ml8">商户</label>
+                            <span class="radio-box ml8"><input type="radio" id="gender-male" name="sign-gender" value="1" checked="checked" v-model="person.role">
                                 <label for="gender-male"></label>
                             </span>
-                            <label for="gender-male" class="f14 c-333 ml8">先生</label>
+                            <label for="gender-male" class="f14 c-333 ml8">租客</label>
                         </span>
                     </li>
-                    <li class="clearfix">
-                        <i class="icon tuijian-num-icon left"></i>
-                        <p class="left"><input class="tuijian-num" type="text" placeholder="请输入推荐人编号"></p>
-                    </li>
                 </ul>
-                <button class="sub register-btn">注册</button>
+                <button class="sub register-btn" @click="register">注册</button>
                 <router-link to="/userLogin" class="have-acc f14 tcenter c-3fabfa cursor-pointer mb10" style="display: block;">已有账号，立即登录</router-link>
             </div>
             <i class="icon cancel-white-icon cancel-sign" @click="close()"></i>
@@ -47,10 +40,27 @@
     </div>
 </template>
 <script>
+import { register } from '@/api/login'
 export default {
+  data() {
+    return {
+      person: {
+        'loginName': '',
+        'password': '',
+        'phone': '',
+        'role': 0,
+        'university': 0
+      }
+    }
+  },
   methods: {
     close() {
       this.$emit('closeRegister', true)
+    },
+    register() {
+      register(this.person).then(result => {
+        console.log(result)
+      })
     }
   }
 }

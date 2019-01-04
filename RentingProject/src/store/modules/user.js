@@ -33,7 +33,7 @@ const user = {
         // commit('SET_TOKEN', username)
         // resolve()
         login(username, userInfo.password).then(response => {
-          const data = response.data
+          const data = response
           setToken(data.token)
           commit('SET_TOKEN', data.token)
           resolve()

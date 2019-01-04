@@ -8,6 +8,7 @@ export function getSearchSchool(name) {
   })
 }
 
+// 通过城市名查询高校列表
 export function CityToSchool(cityname) {
     return request({
       url: 'http://119.29.166.254:9090/api/university/getUniversityByCityName?name=' + cityname,
