@@ -9,7 +9,7 @@
                     <div class="member-info left">
                         <p class="f18 c-333 mt6 mb6">晚上好，1002445</p>
                         <p class="f12 c-333 mb10">会员编号：1002445</p>
-                <a href="/member/partner/apply" class="f12 c-ff7d2f">立即认证合伙人</a>
+                        <div class="f12 c-ff7d2f" @click="changeMyInfo">修改信息</div>
                     </div>
                 </div>
                 <div class="num tcenter left">
@@ -25,7 +25,7 @@
         <div class="member-right main">
             <div class="member-rt clearfix">
                 <div class="tabs clearfix left">
-                    <a href="/member/like/fang" class="tab active">关注的房源</a>
+                    <a href="/member/like/fang" class="tab active">预约的房源</a>
                 </div>
             </div>
             <table class="member-table">
@@ -34,7 +34,7 @@
                         <th class="tleft">房屋信息</th>
                         <th>价格</th>
                         <th>状态</th>
-                        <th>发布时间</th>
+                        <th>预约时间</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -68,9 +68,11 @@
             <input type="hidden" name="type" id="type" value="fang">
             <ul class="page"><li><a href="https://zuke.com/member/like/fang?page=1" class="first">首页</a></li><li><a href="https://zuke.com/member/like/fang?page=1" class="previous">上一页</a></li><li><a href="javascript:;" class="item active">1</a></li><li><a href="https://zuke.com/member/like/fang?page=1" class="next">下一页</a></li><li><a href="https://zuke.com/member/like/fang?page=1" class="last">末页</a></li></ul>        
         </div>
+        <dialog-panel ref="dialogPanel"/>
     </div>
 </template>
 <script>
+import DialogPanel from './DialogPanel'
 export default {
   data() {
     return {
@@ -109,6 +111,14 @@ export default {
           describe: '学校附近，有电梯'
         }
       ]
+    }
+  },
+  components: {
+    DialogPanel
+  },
+  methods: {
+    changeMyInfo() {
+      this.$refs.dialogPanel.show()
     }
   }
 }

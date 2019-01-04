@@ -1,7 +1,9 @@
 <template>
     <div class="main details-box">
         <div class="tit-box clearfix">
-            <div class="bold title left twoEllipsis">{{houseDetail.housename}}</div>
+            <div class="bold title left twoEllipsis">
+                <el-input v-model="houseDetail.housename" placeholder="房屋标题" style="width: 500px; margin-right: 10px;"></el-input>
+            </div>
             <div class="btns left f0 middle">
                 <span class="follow">关注房源</span>
                 <span class="yuyue">预约看房</span>
@@ -61,18 +63,18 @@
                     <div class="addr f14 clearfix"><span class="c-999 left">地址：</span><span class="c-333 left"><el-input v-model="houseDetail.address" placeholder="地址" size="mini" style="width: 200px;"></el-input></span></div>
                 </div>
                 <p class="fang-notes clearfix">
-                    <span class="fang-note list-note-type9">{{houseDetail.describe}}</span>
+                    <span class="fang-note list-note-type9"><el-input v-model="houseDetail.describe" placeholder="描述" size="mini" style="width: 300px; margin-right: 10px;"></el-input></span>
                 </p>
                 <p class="f16 c-333 bold mb10 mt6">发布人</p>
                 <div class="fabu-man clearfix">
                     <div class="fabu-avatar radiusHalf left"><img src="https://img2.zuke.com/avatar/101/03.jpg" alt=""></div>
                     <div class="left ml12">
-                        <p class="mt4 f18 c-333">{{houseDetail.name}}</p>
+                        <p class="mt4 f18 c-333"><el-input v-model="houseDetail.name" placeholder="出租人姓名" size="mini" style="width: 120px; margin-right: 10px;"></el-input></p>
                     </div>
                 </div>
                 <div class="customer-hot-line middle">
                     <span class="f16 c-333">咨询热线：</span>
-                    <span class="f16 c-ff5555">{{houseDetail.phonenumber}}</span>
+                    <span class="f16 c-ff5555"><el-input v-model="houseDetail.phonenumber" placeholder="电话号码" size="mini" style="width: 120px; margin-right: 10px;"></el-input></span>
                 </div>
                 <div class="important-tip clearfix">
                     <div class="left tit">
@@ -130,7 +132,7 @@
             </div>
         </div>
         <p class="f16 c-333 bold mtb20 plr20">房源描述</p>
-        <div class="plr20 c-333 f14">{{houseDetail.describe}}</div>
+        <div class="plr20 c-333 f14"><el-input v-model="houseDetail.describe" placeholder="描述" size="mini" style="width: 100%; margin-right: 10px;"></el-input></div>
         <p class="f16 c-333 bold mtb20 plr20">图片观看</p>
         <div class="pic-big-list mtb20 plr20">
             <div class="swiper-wrapper">

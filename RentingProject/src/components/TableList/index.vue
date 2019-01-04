@@ -23,10 +23,7 @@
           :width="btnList.width?btnList.width:'100'">
           <template slot-scope="scope">
             <el-button size="small" v-if="btnList.edit" @click="changeInfo(scope)" type="primary" icon="el-icon-edit"></el-button>
-            <el-button size="small" v-if="btnList.dealStatus&&scope.row.doState!='已处理'" @click="dealStatusInfo(scope)" type="primary">处理</el-button>
-            <el-button size="small" v-if="btnList.plan&&scope.row.routeState==0&&scope.row.rwwczt=='2'" @click="toRoute(scope)" type="danger">未规划</el-button>
-            <el-button size="small" v-if="btnList.plan&&scope.row.routeState==1&&scope.row.rwwczt=='2'" @click="toRoute(scope)" type="primary">行程</el-button>
-            <el-button size="small" v-if="btnList.getPic&&scope.row.rwwczt!='2'" @click="checkPic(scope)" type="primary">登记表</el-button>
+            <el-button size="small" v-if="btnList.appointment" @click="dealStatusInfo(scope)" type="primary">确认</el-button>
           </template>
         </el-table-column>        
     </el-table>

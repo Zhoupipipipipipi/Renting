@@ -78,6 +78,18 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/appointmentManager',
+    component: Layout,
+    children: [
+      {
+        path: 'appointmentManager',
+        name: 'appointmentManager',
+        component: () => import('@/views/appointmentManager/index'),
+        meta: { title: '预约管理', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: '/editDetails',
     name: 'editDetails',
     component: () => import('@/views/changeDetails/index')
