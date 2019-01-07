@@ -21,10 +21,16 @@
                             <router-link to="/details">详情</router-link>
                         </li>
                         <li>
-                            <router-link to="/my">个人中心</router-link>
+                            <router-link to="">个人中心</router-link>
                         </li>
                     </ul>
-                        <span class="left f16 c-333">
+                        <span v-if="userName" class="left f16 c-333">
+                            <span class="nav-log">
+                                <router-link to="/my">{{userName}}</router-link>
+                            </span>
+                            <span> | </span><span class="nav-reg" @click="logout">退出</span>
+                        </span>
+                        <span class="left f16 c-333" v-else>
                             <span class="nav-log">
                                 <router-link to="/userLogin">登录</router-link>
                             </span>
@@ -54,9 +60,12 @@ export default {
       options: provinceAndCityData,
       selectedOptions: ['440000', '441200'],
       CityName: '',
-      CityList: []
-
+      CityList: [],
+      userName: this.$store.state.user.name
     }
+  },
+  mounted() {
+    console.log(this.$store.state.user.name)
   },
   components: {
     Register
@@ -73,6 +82,9 @@ export default {
         this.CityName = CodeToText[value[1]]
       }
       this.$router.push({ name: 'index', params: { CityName: this.CityName }})
+    },
+    logout() {
+      this.$store.dispatch('LogOut')
     }
   }
 }

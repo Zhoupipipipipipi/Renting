@@ -29,6 +29,7 @@ service.interceptors.response.use(
   */
     const res = response.data
     if (response.status !== 200) {
+      console.log('1')
       Message({
         message: res.message,
         type: 'error',
@@ -53,12 +54,13 @@ service.interceptors.response.use(
     }
   },
   error => {
+    console.log('3')
     console.log('err' + error)// for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    // Message({
+    //   message: error.message,
+    //   type: 'error',
+    //   duration: 5 * 1000
+    // })
     return Promise.reject(error)
   }
 )

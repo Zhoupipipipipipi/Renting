@@ -150,9 +150,9 @@ export default {
     return {
       houseDetail: {
         housenumber: 3,
-        housename: '新秀地铁站附近 芳春花园小区',
+        name: '',
         picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
-        area: '15',
+        area: '',
         apartment: '1室0厅1卫',
         price: '1200',
         address: '芳春花园',
@@ -161,7 +161,7 @@ export default {
         region: '黄贝岭-芳春花园',
         floor: '1/8',
         pay: '押二月付',
-        name: '高先生',
+        userId: '高先生',
         phonenumber: '18865925412'
       },
       apartmentOptions: [

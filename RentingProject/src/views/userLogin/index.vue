@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { Message } from 'element-ui'
 export default {
   name: 'login',
   data() {
@@ -65,10 +66,16 @@ export default {
       this.$refs.loginForm.validate(valid => { // 表单验证
         if (valid) { // 验证成功
           this.loading = true // 加载中
-          this.$store.dispatch('Login', this.loginForm).then(() => {
+          this.loginForm.role = 0
+          this.$store.dispatch('Login', this.loginForm).then((result) => {
+            console.log(result)
             this.loading = false
             this.$router.push({ path: '/' }) // 链接跳转
           }).catch(() => {
+            Message({
+              message: '登录账号和密码错误',
+              type: 'warning'
+            })
             this.loading = false
           })
         } else {

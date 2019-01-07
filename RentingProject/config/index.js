@@ -16,10 +16,10 @@ module.exports = {
         changeOrigin: true
       } */
       '/renting': {
-        target: 'http://120.79.20.13:8888',//设置你调用的接口域名和端口号 别忘了加http
+        target: 'http://localhost:8888', // 设置你调用的接口域名和端口号 别忘了加http
         changeOrigin: true,
         pathRewrite: {
-          '^/renting': ''//这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替 比如我要调             用'http://40.00.100.100:3002/user/add'，直接写‘/api/user/add’即可
+          '^/renting': ''// 这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替 比如我要调             用'http://40.00.100.100:3002/user/add'，直接写‘/api/user/add’即可
         }
       }
     },
@@ -57,7 +57,7 @@ module.exports = {
     // (https://github.com/webpack/css-loader#sourcemaps)
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
-    cssSourceMap: false,
+    cssSourceMap: false
   },
 
   build: {

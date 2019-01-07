@@ -83,6 +83,7 @@
       flex: 1;
       overflow: hidden;
       border-radius: 5px;
+      height: 450px;
     }
     .tbpageing {
       @extend .tablePaging;

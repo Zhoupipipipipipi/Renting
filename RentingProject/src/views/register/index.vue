@@ -20,11 +20,11 @@
                     <li class="clearfix">
                         <i class="icon portrait-blue-icon left"></i>
                         <span class="ml20 left edit-line lh-36 middle">
-                            <span class="radio-box"><input type="radio" id="gender-female" name="sign-gender" value="0" v-model="person.role">
+                            <span class="radio-box"><input type="radio" id="gender-female" name="sign-gender" value="1" v-model="person.role">
                                 <label for="gender-female"></label>
                             </span>
                             <label for="gender-female" class="f14 c-333 ml8">商户</label>
-                            <span class="radio-box ml8"><input type="radio" id="gender-male" name="sign-gender" value="1" checked="checked" v-model="person.role">
+                            <span class="radio-box ml8"><input type="radio" id="gender-male" name="sign-gender" value="0" checked="checked" v-model="person.role">
                                 <label for="gender-male"></label>
                             </span>
                             <label for="gender-male" class="f14 c-333 ml8">租客</label>
@@ -41,6 +41,7 @@
 </template>
 <script>
 import { register } from '@/api/login'
+import { Message } from 'element-ui'
 export default {
   data() {
     return {
@@ -59,7 +60,17 @@ export default {
     },
     register() {
       register(this.person).then(result => {
-        console.log(result)
+        Message({
+          message: '注册成功',
+          type: 'success'
+        })
+        this.$emit('closeRegister', true)
+      }).catch(err => {
+        console.log(err)
+        Message({
+          message: '用户已存在',
+          type: 'success'
+        })
       })
     }
   }

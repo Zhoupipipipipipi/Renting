@@ -1,12 +1,14 @@
 import { logout, getInfo, login } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setStroage } from '@/utils/auth'
+import { Message } from 'element-ui'
 
 const user = {
   state: {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    user: {}
   },
 
   mutations: {
@@ -21,6 +23,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_USER: (state, user) => {
+      state.user = user
     }
   },
 
@@ -29,14 +34,21 @@ const user = {
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        // setToken(username)
-        // commit('SET_TOKEN', username)
-        // resolve()
         login(username, userInfo.password).then(response => {
           const data = response
-          setToken(data.token)
-          commit('SET_TOKEN', data.token)
-          resolve()
+          if (data.role === userInfo.role) {
+            setToken(data.token)
+            setStroage('userId', JSON.stringify(data))
+            commit('SET_TOKEN', data.token)
+            commit('SET_NAME', username)
+            commit('SET_USER', data)
+            resolve()
+          } else {
+            Message({
+              message: '用户名密码错误',
+              type: 'warning'
+            })
+          }
         }).catch(error => {
           reject(error)
         })
@@ -46,14 +58,13 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo(state.token).then(response => {
-          const data = response.data
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
-          } else {
-            reject('getInfo: roles must be a non-null array !')
-          }
-          commit('SET_NAME', data.name)
+        console.log(window.localStorage.getItem('userId'))
+        const id = JSON.parse(window.localStorage.getItem('userId')).id
+        getInfo(id).then(response => {
+          const data = response
+          console.log(data)
+          commit('SET_NAME', data.phone)
+          commit('SET_USER', data)
           commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {

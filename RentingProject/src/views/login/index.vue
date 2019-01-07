@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { Message } from 'element-ui'
+
 export default {
   name: 'login',
   data() {
@@ -42,8 +44,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: 'admin'
+        username: 'zhangsan',
+        password: '121212'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '必填' }],
@@ -65,10 +67,16 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          this.loginForm.role = 1
           this.$store.dispatch('Login', this.loginForm).then((result) => {
+            console.log(result)
             this.loading = false
-            this.$router.push({ path: '/houserManager' })
+            this.$router.push({ path: '/houserManager' }) // 链接跳转
           }).catch(() => {
+            Message({
+              message: '登录账号和密码错误',
+              type: 'warning'
+            })
             this.loading = false
           })
         } else {

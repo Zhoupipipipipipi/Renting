@@ -13,7 +13,7 @@ import { ContentLayout } from '@/components/ContentLayout'
 import DialogPanel from './DialogPanel'
 import DialogUpload from './DialogUpload'
 import { Message } from 'element-ui'
-// import { deleteOnePeople, getPeople } from '@/api/examPlan'
+import { getHouseList } from '@/api/renting'
 // import html2canvas from 'html2canvas'
 
 export default {
@@ -23,15 +23,13 @@ export default {
       peopleTableList: [
       ],
       tableNameList: [
-        { id: 'name', name: '发布人' },
-        { id: 'housename', housename: '房子名称' },
+        { id: 'name', name: '房子名称' },
         { id: 'area', name: '面积' },
         { id: 'apartment', name: '户型' },
         { id: 'floor', name: '楼层' },
         { id: 'region', name: '区域' },
         { id: 'address', name: '地址' },
-        { id: 'price', name: '价格' },
-        { id: 'phonenumber', name: '联系电话' }
+        { id: 'price', name: '价格' }
       ],
       currentOp: 'add',
       btnList: {
@@ -93,21 +91,24 @@ export default {
       if (page) {
         this.$refs.content.setPage(page)
       }
-      /* this.loading = true
+      this.loading = true
+      const userId = JSON.parse(window.localStorage.getItem('userId')).id
+      console.log(userId)
       const info = {
-        pageNo: !page ? this.$refs.content.getPage() : page,
+        page: !page ? this.$refs.content.getPage() : page,
         pageSize: this.$refs.content.getLimit(),
-        xm: this.xm,
-        areaNumber: this.$store.state.user.department.addressCode
+        userId: userId,
+        area: ''
       }
-      getPeople(info).then((result) => {
-        this.peopleTableList = result.data.list
-        this.$refs.content.setTotal(result.data.total)
+      getHouseList(info).then((result) => {
+        console.log(result)
+        this.peopleTableList = result.list
+        this.$refs.content.setTotal(result.total)
       }).catch((err) => {
         console.log(err)
       }).finally(() => {
         this.loading = false
-      }) */
+      })
     },
     printing(msg) { // 打印
       window.document.body.style.height = 'auto'
