@@ -2,7 +2,7 @@
     <div class="main details-box">
         <div class="tit-box clearfix">
             <div class="bold title left twoEllipsis">
-                <el-input v-model="houseDetail.housename" placeholder="房屋标题" style="width: 500px; margin-right: 10px;"></el-input>
+                <el-input v-model="houseDetail.name" placeholder="房屋标题" style="width: 500px; margin-right: 10px;"></el-input>
             </div>
             <div class="btns left f0 middle">
                 <span class="follow">关注房源</span>
@@ -20,7 +20,18 @@
         </div>
         <div class="main-info clearfix">
             <div class="carousel clearfix left">
-                <div class="swiper-slide swiper-slide-active" style="width: 100%;"><img class="zooming-switch" :src="houseDetail.picture" alt=""></div>
+                <div class="swiper-slide swiper-slide-active" style="width: 100%;">
+                    <img class="zooming-switch" :src="houseDetail.picture" alt="">
+                    <el-upload
+                    class="avatar-uploader"
+                    action="http://120.79.20.13:8888/img/upload"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl" :src="houseDetail.picture" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </div>
             </div>
             <div class="info left">
                 <p class="c-ff5555 line-h1"><span class="f26 bold"><el-input v-model="houseDetail.price" placeholder="价格" size="mini" style="width: 120px; margin-right: 10px;"></el-input></span><span class="f18">元/月</span></p>
@@ -69,26 +80,14 @@
                 <div class="fabu-man clearfix">
                     <div class="fabu-avatar radiusHalf left"><img src="https://img2.zuke.com/avatar/101/03.jpg" alt=""></div>
                     <div class="left ml12">
-                        <p class="mt4 f18 c-333"><el-input v-model="houseDetail.name" placeholder="出租人姓名" size="mini" style="width: 120px; margin-right: 10px;"></el-input></p>
+                        <p class="mt4 f18 c-333"><el-input v-model="houseDetail.userId" placeholder="出租人姓名" size="mini" style="width: 120px; margin-right: 10px;"></el-input></p>
                     </div>
                 </div>
                 <div class="customer-hot-line middle">
                     <span class="f16 c-333">咨询热线：</span>
                     <span class="f16 c-ff5555"><el-input v-model="houseDetail.phonenumber" placeholder="电话号码" size="mini" style="width: 120px; margin-right: 10px;"></el-input></span>
                 </div>
-                <div class="important-tip clearfix">
-                    <div class="left tit">
-                        <i class="icon dangle-triangle-icon"></i>
-                        <p class="f14 c-ff5555 tcenter">重要提示</p>
-                    </div>
-                    <p class="left f14 desc">
-                        <span class="c-333">签约前</span>
-                        <span class="c-ff5555">切勿支付</span>
-                        <span class="c-333">任何费用！务必</span>
-                        <span class="c-ff5555">实地看房，</span>
-                        <span class="c-333">查验房东和房屋证件！</span>
-                    </p>
-                </div>
+                <el-button type="danger" @click="commit">确认</el-button>
             </div>
         </div>
         <p class="f16 c-333 bold mtb20 plr20">配套设施</p>
@@ -145,25 +144,30 @@
     </div>
 </template>
 <script>
+import { getOneHouseInfo, addHouse, editHouse } from '@/api/renting'
+import { Message } from 'element-ui'
 export default {
   data() {
     return {
       houseDetail: {
-        housenumber: 3,
+        id: 3,
         name: '',
-        picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
+        files: [],
+        picture: '',
         area: '',
-        apartment: '1室0厅1卫',
-        price: '1200',
-        address: '芳春花园',
-        date: '12-10',
+        apartment: '',
+        price: '',
+        address: '',
+        date: '',
         describe: '拎包入住 采光好 地铁口附近 商业街附近 学校附近 有阳台 有花园',
-        region: '黄贝岭-芳春花园',
-        floor: '1/8',
-        pay: '押二月付',
-        userId: '高先生',
-        phonenumber: '18865925412'
+        region: '',
+        floor: '',
+        pay: '',
+        userId: this.$store.state.user.user.id,
+        phonenumber: '',
+        orderFlag: 0
       },
+      id: '',
       apartmentOptions: [
         { value: '1室1厅1卫' },
         { value: '1室2厅1卫' },
@@ -174,6 +178,58 @@ export default {
         { value: '押二付一' },
         { value: '押一付一' }
       ]
+    }
+  },
+  mounted() {
+    this.getHouseInfo()
+    console.log(this.$store.state)
+  },
+  methods: {
+    getHouseInfo() { // 通过id获取用户信息
+      this.id = this.$route.params.id
+      if (this.id) {
+        getOneHouseInfo(this.id).then(result => {
+          this.houseDetail = result
+        })
+      }
+    },
+    commit() {
+      if (this.id) { // 修改
+        editHouse(this.houseDetail).then(result => {
+          if (result === 'ok') {
+            Message({
+              message: '添加成功',
+              type: 'success'
+            })
+            this.$router.go(-1)
+          }
+        })
+      } else { // 添加
+        addHouse(this.houseDetail).then(result => {
+          if (result === 'ok') {
+            Message({
+              message: '添加成功',
+              type: 'success'
+            })
+            this.$router.go(-1)
+          }
+        })
+      }
+    },
+    handleAvatarSuccess(res, file) {
+      this.houseDetail.picture = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     }
   }
 }
@@ -324,4 +380,27 @@ export default {
 .pic-big-list .swiper-slide img{
     width: 100%;
 }
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

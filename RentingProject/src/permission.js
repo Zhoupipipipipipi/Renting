@@ -10,13 +10,15 @@ router.beforeEach((to, from, next) => {
   NProgress.start()
   next()
   if (getToken()) {
-    if (to.path === '/login') {
-      next({ path: '/' })
+    const role = JSON.parse(window.localStorage.getItem('userId')).role
+    if (to.path === '/login' && role === 1) {
+      next({ path: '/houserManager' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
+    } else if (to.path === '/userLogin' && role === 0) {
+      next({ path: '/' })
     } else {
       if (store.getters.roles.length === 0) {
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
-          console.log()
           next()
         }).catch((err) => {
           store.dispatch('FedLogOut').then(() => {

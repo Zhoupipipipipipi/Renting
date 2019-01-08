@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="list-info">
-                    <p class="oneEllipsis mb6 bold f22 c-333">{{item.housename}}</p>
+                    <p class="oneEllipsis mb6 bold f22 c-333">{{item.name}}</p>
                     <p class="clearfix"><span class="f16 c-333 left mt6">{{item.area}}㎡/{{item.apartment}}</span><span class="f24 c-ff5555 right">{{item.price}}<span class="f16">元/月</span></span>
                     </p>
                     <p class="mb6 clearfix"><span class="f16 c-999 left middle"><i class="icon location-icon middle"></i><span>{{item.address}}</span></span><span class="f14 c-999 right">{{item.date}}发布</span></p>
@@ -42,6 +42,7 @@
     </div>
 </template>
 <script>
+import { getHouseList } from '@/api/renting'
 export default {
   data() {
     return {
@@ -115,6 +116,22 @@ export default {
           describe: '学校附近，有电梯'
         }
       ]
+    }
+  },
+  mounted() {
+    this.getHouseList()
+  },
+  methods: {
+    getHouseList() {
+      const info = {
+        page: 1,
+        pageSize: 25,
+        userId: '',
+        area: ''
+      }
+      getHouseList(info).then(result => {
+        this.houseList = result.list
+      })
     }
   }
 }

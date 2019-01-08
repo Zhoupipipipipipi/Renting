@@ -90,8 +90,13 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/editDetails',
+    path: '/editDetails/:id',
     name: 'editDetails',
+    component: () => import('@/views/changeDetails/index')
+  },
+  {
+    path: '/addDetails',
+    name: 'addDetails',
     component: () => import('@/views/changeDetails/index')
   },
   {

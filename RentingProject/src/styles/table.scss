@@ -1,0 +1,28 @@
+.app-container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  .app-header-area {
+    background-color: #fff;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+  }
+  .app-middle-area {
+    background-color: #fff;
+    padding: 5px 8px 10px 8px;
+    flex: 1;
+    position: relative;
+    overflow: auto;
+  }
+  .app-footer-area {
+    margin-top: 12px;
+    padding: 15px 20px;
+    background-color: #fff;
+    text-align: right;
+  }
+}
+.content-manager{
+  padding: 15px 15px 15px 15px;
+}

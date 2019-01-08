@@ -13,7 +13,7 @@ import { ContentLayout } from '@/components/ContentLayout'
 import DialogPanel from './DialogPanel'
 import DialogUpload from './DialogUpload'
 import { Message } from 'element-ui'
-import { getHouseList } from '@/api/renting'
+import { getHouseList, editHouse } from '@/api/renting'
 // import html2canvas from 'html2canvas'
 
 export default {
@@ -49,15 +49,21 @@ export default {
   methods: {
     addSubmit(msg) { // 添加
       this.currentOp = msg
-      this.$router.push({ name: 'editDetails' })
+      this.$router.push({ name: 'addDetails' })
       // this.$refs.dialogPanel.show()
     },
     delSubmit(msg) { // 删除
       const info = this.$refs.personTable.handleSelectionChange() // 拿到选中的数据
       if (info) {
-        const ids = []
         info.forEach(element => {
-          ids.push(element.id)
+          editHouse({ houseId: element.id }).then(result => {
+            if (result === 'ok') {
+              Message({
+                message: '删除成功',
+                type: 'success'
+              })
+            }
+          })
         })
         /* const exam = {
           ids: ids.join(',')
@@ -80,7 +86,8 @@ export default {
     },
     changeInfo(msg) { // 修改
       this.currentOp = 'edit'
-      this.$router.push({ name: 'editDetails' })
+      console.log(msg)
+      this.$router.push({ name: 'editDetails', params: { id: msg.id }})
       // this.$refs.dialogPanel.show(msg)
     },
     search(msg) { // 查询
