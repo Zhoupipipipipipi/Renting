@@ -49,7 +49,7 @@ export const constantRouterMap = [
         component: () => import('@/views/index/components/index')
       },
       {
-        path: '/details',
+        path: '/details/:id',
         name: 'details',
         component: () => import('@/views/details/index')
       },

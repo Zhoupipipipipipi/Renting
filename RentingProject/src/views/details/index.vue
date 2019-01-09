@@ -4,7 +4,7 @@
             <div class="bold title left twoEllipsis">{{houseDetail.housename}}</div>
             <div class="btns left f0 middle">
                 <span class="follow">关注房源</span>
-                <span class="yuyue">预约看房</span>
+                <span class="yuyue" @click="orderRoom">预约看房</span>
                 <span class="online"><a href="/video" target="_blank">在线看房</a></span>
             </div>
             <div class="left share-fang">
@@ -28,14 +28,14 @@
                         <span class="f14"><span class="c-999">户型：</span><span class="c-333">{{houseDetail.apartment}}</span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">方式：</span><span class="c-333">{{houseDetail.pay}}</span></span>
-                        <span class="f14"><span class="c-999">入住时间：</span><span class="c-333">{{houseDetail.date}}</span></span>
+                        <span class="f14"><span class="c-999">方式：</span><span class="c-333">{{houseDetail.payType}}</span></span>
+                        <span class="f14"><span class="c-999">发布时间：</span><span class="c-333">{{houseDetail.createTime}}</span></span>
                     </p>
                     <p>
                         <span class="f14"><span class="c-999">楼层：</span><span class="c-333">{{houseDetail.floor}}层 </span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">编号：</span><span class="c-333">{{houseDetail.housenumber}}</span></span>
+                        <span class="f14"><span class="c-999">学校：</span><span class="c-333">{{houseDetail.university}}</span></span>
                         <span class="f14"><span class="c-999">区域：</span><span class="c-333">{{houseDetail.region}}</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="c-3fabfa" href="/fang?search=%E8%8A%B3%E6%98%A5%E8%8A%B1%E5%9B%AD">(共1套在租住宅)</a></span>
                     </p>
                     <div class="addr f14 clearfix"><span class="c-999 left">地址：</span><span class="c-333 left">{{houseDetail.address}}</span></div>
@@ -123,25 +123,75 @@
     </div>
 </template>
 <script>
+import { getOneHouseInfo, orderRoom } from '@/api/renting'
+import { formatDate } from '@/utils/validate.js'
+
 export default {
   data() {
     return {
       houseDetail: {
-        housenumber: 3,
-        housename: '新秀地铁站附近 芳春花园小区',
-        picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
-        area: '15',
-        apartment: '1室0厅1卫',
-        price: '1200',
-        address: '芳春花园',
-        date: '12-10',
+        // housenumber: 3,
+        // housename: '新秀地铁站附近 芳春花园小区',
+        // picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
+        // area: '15',
+        // apartment: '1室0厅1卫',
+        // price: '1200',
+        // address: '芳春花园',
+        // date: '12-10',
+        // describe: '拎包入住 采光好 地铁口附近 商业街附近 学校附近 有阳台 有花园',
+        // region: '黄贝岭-芳春花园',
+        // floor: '1/8',
+        // pay: '押二月付',
+        // name: '高先生',
+        // phonenumber: '18865925412'
+        id: 3,
+        name: '',
+        files: [],
+        picture: '',
+        area: '',
+        apartment: '',
+        price: '',
+        address: '',
+        createTime: '',
         describe: '拎包入住 采光好 地铁口附近 商业街附近 学校附近 有阳台 有花园',
-        region: '黄贝岭-芳春花园',
-        floor: '1/8',
-        pay: '押二月付',
-        name: '高先生',
-        phonenumber: '18865925412'
+        region: '',
+        floor: '',
+        payType: '',
+        userId: '',
+        phonenumber: '',
+        university: '',
+        orderFlag: 0
+      },
+      id: ''
+    }
+  },
+  mounted() {
+    this.getHouseInfo()
+    console.log(this.$store.state)
+  },
+  methods: {
+    getHouseInfo() { // 通过id获取用户信息
+      this.id = this.$route.params.id
+      if (this.id) {
+        getOneHouseInfo(this.id).then(result => {
+          this.houseDetail = result
+          this.houseDetail.createTime = formatDate(new Date(this.houseDetail.createTime), 'yyyy-MM-dd')
+        })
       }
+    },
+    orderRoom() {
+      const info = {
+        'comment': '',
+        'houseId': this.id,
+        'ownerId': this.houseDetail.userId,
+        'userId': this.$store.state.user.user.id
+      }
+      orderRoom(info).then(result => {
+        this.$message({
+          message: '预约成功',
+          type: 'success'
+        })
+      })
     }
   }
 }

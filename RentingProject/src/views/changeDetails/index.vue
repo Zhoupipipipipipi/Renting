@@ -24,15 +24,17 @@
                     <img class="zooming-switch" :src="houseDetail.picture" alt="">
                     <el-upload
                     class="avatar-uploader"
-                    action="http://120.79.20.13:8888/img/upload"
+                    action="http://120.79.20.13:8888/api/auth/upload"
                     :show-file-list="false"
+                    :headers="tokenInfo"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="houseDetail.picture" class="avatar">
+                    <img v-if="houseDetail.picture" :src="houseDetail.picture" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </div>
             </div>
+            {{tokenInfo}}
             <div class="info left">
                 <p class="c-ff5555 line-h1"><span class="f26 bold"><el-input v-model="houseDetail.price" placeholder="价格" size="mini" style="width: 120px; margin-right: 10px;"></el-input></span><span class="f18">元/月</span></p>
                 <div class="detail-room">
@@ -51,7 +53,7 @@
                     </p>
                     <p>
                         <span class="f14"><span class="c-999">方式：</span><span class="c-333">
-                            <el-select v-model="houseDetail.pay" placeholder="请选择方式" size="mini" style="width: 100px;">
+                            <el-select v-model="houseDetail.payType" placeholder="请选择方式" size="mini" style="width: 100px;">
                                 <el-option
                                 v-for="item in payOptions"
                                 :key="item.value"
@@ -60,15 +62,15 @@
                                 </el-option>
                             </el-select>
                         </span></span>
-                        <span class="f14"><span class="c-999">入住时间：</span><span class="c-333">
-                            <el-date-picker v-model="houseDetail.date" type="date" placeholder="入住时间" size="mini" style="width: 150px;"></el-date-picker>
+                        <span class="f14"><span class="c-999">发布时间：</span><span class="c-333">
+                            <el-date-picker v-model="houseDetail.createTime" type="date" placeholder="入住时间" size="mini" style="width: 150px;"></el-date-picker>
                         </span></span>
                     </p>
                     <p>
                         <span class="f14"><span class="c-999">楼层：</span><span class="c-333"><el-input v-model="houseDetail.floor" placeholder="楼层" size="mini" style="width: 50px; margin-right: 10px;"></el-input>层 </span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">编号：</span><span class="c-333"><el-input v-model="houseDetail.housenumber" placeholder="编号" size="mini" style="width: 100px;"></el-input></span></span>
+                        <span class="f14"><span class="c-999">学校：</span><span class="c-333"><el-input v-model="houseDetail.university" placeholder="编号" size="mini" style="width: 100px;"></el-input></span></span>
                         <span class="f14"><span class="c-999">区域：</span><span class="c-333"><el-input v-model="houseDetail.region" placeholder="区域：" size="mini" style="width: 150px;"></el-input></span></span>
                     </p>
                     <div class="addr f14 clearfix"><span class="c-999 left">地址：</span><span class="c-333 left"><el-input v-model="houseDetail.address" placeholder="地址" size="mini" style="width: 200px;"></el-input></span></div>
@@ -149,6 +151,9 @@ import { Message } from 'element-ui'
 export default {
   data() {
     return {
+      tokenInfo: {
+        token: this.$store.state.user.token
+      },
       houseDetail: {
         id: 3,
         name: '',
@@ -158,13 +163,14 @@ export default {
         apartment: '',
         price: '',
         address: '',
-        date: '',
+        createTime: '',
         describe: '拎包入住 采光好 地铁口附近 商业街附近 学校附近 有阳台 有花园',
         region: '',
         floor: '',
-        pay: '',
+        payType: '',
         userId: this.$store.state.user.user.id,
         phonenumber: '',
+        university: '',
         orderFlag: 0
       },
       id: '',

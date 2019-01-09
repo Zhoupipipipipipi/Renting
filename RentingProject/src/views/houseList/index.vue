@@ -10,7 +10,7 @@
                     <a href="/fang?district=&amp;region=&amp;line=&amp;station=&amp;bedroom=1&amp;rentstart=&amp;rentend=&amp;squarestart=&amp;squareend=&amp;characteristic=&amp;decoration=&amp;orientation=&amp;floor=&amp;xq=&amp;search=&amp;order=squareDesc">面积<i class="icon down-arrow-icon"></i></a>
                 </div>
             </div>
-            <router-link to="" class="list-item clearfix"  v-for="item in houseList" :key="item.id">
+            <router-link :to="'/details/'+item.id" class="list-item clearfix"  v-for="item in houseList" :key="item.id">
                 <div class="list-img">
                     <img :src="item.picture" alt="">
                     <div class="top-icon">
@@ -121,13 +121,29 @@ export default {
   mounted() {
     this.getHouseList()
   },
+  props: {
+    search: Object
+  },
+  watch: {
+    search: {
+      handler: function(newVal) {
+        this.getHouseList()
+      },
+      deep: true
+    }
+  },
   methods: {
     getHouseList() {
       const info = {
         page: 1,
         pageSize: 25,
         userId: '',
-        area: ''
+        area: '',
+        university: this.search.university ? this.search.university : null, // 学校
+        name: this.search.name ? this.search.name : null, // 关键字
+        apartment: this.search.apartment ? this.search.apartment : null, // 户型
+        price1: this.search.price1 ? this.search.price1 : null,
+        price2: this.search.price2 ? this.search.price2 : null
       }
       getHouseList(info).then(result => {
         this.houseList = result.list

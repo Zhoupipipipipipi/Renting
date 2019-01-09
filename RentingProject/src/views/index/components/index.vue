@@ -13,7 +13,7 @@
                                 </ul>
                             </dd>
                         </dl>
-                        <el-input id="search" placeholder="请输入高校名字" type="text" v-model="searchSchool" v-on:input="getSearchSchool"></el-input>
+                        <el-input id="search" placeholder="请输入高校名字" type="text" v-model="searchSchool" v-on:input="getSearchSchool" @change="changeSearch('name', searchSchool)"></el-input>
                         <!-- <input class="search-btn" value="" type="submit"> -->
                     </form>
                     <el-card class="box-card search-school-box" v-if="search.searchList.length>0">
@@ -36,14 +36,14 @@
                         <div class="criteria-item clearfix" name="area">
                             <span class="left">热门区域</span>
                             <div class="left">
-                                <router-link to="" v-for="(item, $index) in search.area" :key="item.id" v-if="$index<10||showMore">{{item.name}}</router-link>
+                                <span class="area-box" v-for="(item, $index) in search.area" :key="item.id" v-if="$index<10||showMore" @click="changeSearch('university', item.name)">{{item.name}}</span>
                                 <span @click="showAny" class="show-more">更多</span>
                             </div>
                         </div>
                         <div class="criteria-item clearfix">
                             <span class="left">租金</span>
                             <div class="left">
-                                <router-link to="" v-for="item in search.money" :key="item.id">{{item.name}}</router-link>
+                                <span class="area-box" to="" v-for="item in search.money" :key="item.id" @click="changeSearch('price', item)">{{item.name}}</span>
                                 <span class="range middle">
                         <input class="fang-rentstart" type="text" value="">
                         <span class="f14 c-333 ml8">-</span>
@@ -55,14 +55,14 @@
                         <div class="criteria-item clearfix">
                             <span class="left">户型</span>
                             <div class="left">
-                                <router-link to="" v-for="item in search.roomType" :key="item.id">{{item.name}}</router-link>
+                                <span class="area-box" to="" v-for="item in search.roomType" :key="item.id"  @click="changeSearch('apartment', item.name)">{{item.name}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <house-list></house-list>
+        <house-list :search="search"></house-list>
     </div>
 </template>
 <script>
@@ -80,19 +80,24 @@ export default {
           { id: 4, name: '华南理工学院' }
         ],
         money: [
-          { id: 1, name: '1000-2000元' },
-          { id: 2, name: '2000-3000元' },
-          { id: 3, name: '3000-4000元' },
-          { id: 4, name: '4000-5000元' },
-          { id: 5, name: '5000-6000元' }
+          { id: 1, name: '1000-2000元', price1: '1000', price2: '2000' },
+          { id: 2, name: '2000-3000元', price1: '2000', price2: '3000' },
+          { id: 3, name: '3000-4000元', price1: '3000', price2: '4000' },
+          { id: 4, name: '4000-5000元', price1: '4000', price2: '5000' },
+          { id: 5, name: '5000-6000元', price1: '5000', price2: '6000' }
         ],
         roomType: [
-          { id: 1, name: '一室' },
-          { id: 2, name: '两室' },
+          { id: 1, name: '1室1厅1卫' },
+          { id: 2, name: '1室2厅1卫' },
           { id: 3, name: '三室' },
           { id: 4, name: '四室' },
           { id: 5, name: '四室以上' }
         ],
+        university: '',
+        apartment: '',
+        name: '',
+        price1: '',
+        price2: '',
         searchSchool: '', // 查询高校名字
         searchList: [] // 查询高校下拉列表
       },
@@ -138,6 +143,15 @@ export default {
       CityToSchool(this.CityName).then(result => {
         this.search.area = result
       })
+    },
+    changeSearch(key, value) { // 修改查询条件
+      console.log(key + '' + value)
+      if (key === 'price') {
+        this.search.price1 = value.price1
+        this.search.price2 = value.price2
+      } else {
+        this.search[key] = value
+      }
     }
   },
   mounted() {
@@ -317,6 +331,13 @@ z-index: 5; padding: 0 0 0 4px; width: 204px; height: 36px; background-color: #f
     color: #333;
     float: left;
     color: #0C9DF9;
+    cursor: pointer;
+}
+.area-box {
+    margin-right: 20px;
+    font-size: 14px;
+    color: #333;
+    float: left; 
     cursor: pointer;
 }
 </style>

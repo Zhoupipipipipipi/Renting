@@ -41,12 +41,12 @@
                 <tbody>
                     <tr v-for="item in houseList" :key="item.housenumber">
                         <td class="house-info-td">
-                            <router-link to="/fang/102006.html" target="_blank" class="clearfix">
+                            <router-link :to="'/details/'+item.houseId" target="_blank" class="clearfix">
                                 <div class="house-img left">
                                     <img :src="item.picture">
                                 </div>
                                 <div class="house-info left">
-                                    <p class="f16 bold c-333 twoEllipsis">{{item.housename}}</p>
+                                    <p class="f16 bold c-333 twoEllipsis">{{item.houseName}}</p>
                                     <p class="f14 c-666">{{item.area}}㎡ / {{item.apartment}}</p>
                                 </div>
                             </router-link>
@@ -57,7 +57,7 @@
                         <td class="num-td">
                             <p class="tcenter f14 c-333">可租</p></td>
                         <td class="time-td tcenter">
-                            <p class="c-333 f14">{{item.date}}</p>
+                            <p class="c-333 f14">{{item.createTime}}</p>
                         </td>
                         <td class="tcenter">
                             <p class="del f14 c-3fabfa cursor-pointer" data-id="835">删除</p>
@@ -73,6 +73,9 @@
 </template>
 <script>
 import DialogPanel from './DialogPanel'
+import { getOrderRoom } from '@/api/renting'
+import { formatDate } from '@/utils/validate.js'
+
 export default {
   data() {
     return {
@@ -113,12 +116,30 @@ export default {
       ]
     }
   },
+  mounted() {
+    this.getOrderRoom()
+  },
   components: {
     DialogPanel
   },
   methods: {
     changeMyInfo() {
       this.$refs.dialogPanel.show()
+    },
+    getOrderRoom() {
+      console.log(this.$store.state)
+      const info = {
+        page: 1,
+        pageSize: 25,
+        role: 0,
+        userId: this.$store.state.user.user.id
+      }
+      getOrderRoom(info).then(result => {
+        this.houseList = result.list
+        this.houseList.forEach(element => {
+          element.createTime = formatDate(new Date(element.createTime), 'yyyy-MM-dd')
+        })
+      })
     }
   }
 }
