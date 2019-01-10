@@ -24,7 +24,8 @@
                     <img class="zooming-switch" :src="houseDetail.picture" alt="">
                     <el-upload
                     class="avatar-uploader"
-                    action="http://120.79.20.13:8888/api/auth/upload"
+                    action="/renting/api/auth/upload"
+                    :data="uploadData"
                     :show-file-list="false"
                     :headers="tokenInfo"
                     :on-success="handleAvatarSuccess"
@@ -34,7 +35,6 @@
                     </el-upload>
                 </div>
             </div>
-            {{tokenInfo}}
             <div class="info left">
                 <p class="c-ff5555 line-h1"><span class="f26 bold"><el-input v-model="houseDetail.price" placeholder="价格" size="mini" style="width: 120px; margin-right: 10px;"></el-input></span><span class="f18">元/月</span></p>
                 <div class="detail-room">
@@ -153,6 +153,9 @@ export default {
     return {
       tokenInfo: {
         token: this.$store.state.user.token
+      },
+      uploadData: {
+        type: 3
       },
       houseDetail: {
         id: 3,
