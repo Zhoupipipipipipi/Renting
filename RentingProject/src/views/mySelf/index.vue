@@ -7,8 +7,8 @@
                         <img src="https://img2.zuke.com/avatar/101/13.jpg" alt="">
                     </div>
                     <div class="member-info left">
-                        <p class="f18 c-333 mt6 mb6">晚上好，1002445</p>
-                        <p class="f12 c-333 mb10">会员编号：1002445</p>
+                        <p class="f18 c-333 mt6 mb6">您 好，{{$store.state.user.user.nickName}}</p>
+                        <p class="f12 c-333 mb10">手机号码：{{$store.state.user.user.phone}}</p>
                         <div class="f12 c-ff7d2f" @click="changeMyInfo">修改信息</div>
                     </div>
                 </div>
@@ -26,6 +26,7 @@
             <div class="member-rt clearfix">
                 <div class="tabs clearfix left">
                     <a href="/member/like/fang" class="tab active">预约的房源</a>
+                    <a href="/member/like/fang" class="tab active">消息来电</a>
                 </div>
             </div>
             <table class="member-table">

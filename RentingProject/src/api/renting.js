@@ -57,3 +57,27 @@ export function getOrderRoom(data) { // 获取预约列表
     params: data
   })
 }
+
+export function sureOrder(data) { // 获取预约列表
+  return request({
+    url: '/api/auth/order',
+    method: 'put',
+    data: data
+  })
+}
+
+export function getMessage(data) { // 获取预约列表
+  return request({
+    url: '/api/auth/msg',
+    method: 'get',
+    params: data
+  })
+}
+
+export function modifyUserInfo(data) { // 获取预约列表
+  return request({
+    url: '/api/auth/user',
+    method: 'put',
+    data: data
+  })
+}

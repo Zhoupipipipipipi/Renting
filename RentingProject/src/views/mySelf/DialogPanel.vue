@@ -4,12 +4,7 @@
       <div class="form-body">
         <el-form :model="personItem" ref="personItem" :rules="rules" label-width="135px"
                  label-position="right">
-          <div class="item">
-            <el-col :span="12">
-              <el-form-item label="登录名" prop="loginName">
-                <el-input v-model="personItem.loginName" placeholder="登录名"></el-input>
-              </el-form-item>
-            </el-col>
+          <div class="item">            
             <el-col :span="12">
               <el-form-item label="昵称" prop="nickName">
                 <el-input v-model="personItem.nickName" placeholder="昵称"></el-input>
@@ -72,6 +67,7 @@
 <script>
   // import { addOnePerson, updateOnePerson } from '@/api/examPlan'
   // import { getCity } from '@/api/escorting'
+  import { modifyUserInfo } from '@/api/renting'
   export default {
     name: 'DialogPanel',
     data() {
@@ -82,17 +78,6 @@
         rules: {
         },
         personItem: {
-          'avatar': 'string',
-          'createTime': '2019-01-04T12:18:00.085Z',
-          'id': 0,
-          'isDelete': 0,
-          'loginName': '',
-          'nickName': '',
-          'password': '',
-          'phone': '',
-          'role': 0,
-          'sex': 0,
-          'university': 0
         },
         qxShow: false,
         origin: null,
@@ -112,7 +97,6 @@
       }
     },
     props: {
-      currentOp: String
     },
     watch: {
       currentOp(newVal, oldVal) {
@@ -138,68 +122,27 @@
         })
       }
     },
-    async mounted() {
-      await this.getAboutCity('', this.getFirst)
-      await this.getAboutCity(this.id, this.addAddress)
+    mounted() {
+      console.log('11111')
+      this.personItem = JSON.parse(window.localStorage.getItem('userId'))
+      console.log(this.personItem)
     },
     methods: {
       show(item) { // 弹出框显示
-        if (item) {
-          console.log(item)
-          this.personItem = {
-            id: item.id,
-            xm: item.xm,
-            xb: item.xb,
-            sfzjlx: item.sfzjlx,
-            sfzjhm: item.sfzjhm,
-            lxdh: item.lxdh,
-            adminArea: item.adminArea,
-            areaNumber: item.areaNumber,
-            mm: item.mm,
-            newmm: item.mm
-          }
-          const adminAreaArr = this.personItem.adminArea.split('-')
-          adminAreaArr.forEach(element => {
-            if (element.indexOf('市') >= 0) {
-              this.city.value = element
-            } else if (element.indexOf('区') >= 0) {
-              this.area.value = element
-            }
-          })
-        } else {
-          this.personItem = {
-            id: '',
-            xm: '',
-            xb: '',
-            sfzjlx: '',
-            sfzjhm: '',
-            lxdh: '',
-            adminArea: '',
-            areaNumber: '',
-            mm: 'yy123456',
-            newmm: 'yy123456'
-          }
-        }
         this.roleShow = true
+        this.personItem = this.$store.state.user.user
+        console.log(this.personItem)
       },
       submitAddForm() { // 提交表单
         this.$refs.personItem.validate(result => {
-          if (result) {
-            if (this.currentOp === 'add') {
-              console.log(this.personItem)
-              /* addOnePerson(this.personItem).then(result => { // 添加
-                this.showSuccessInfo(result.message)
-                this.roleShow = false
-                this.$emit('complete')
-              }) */
-            } else {
-              /* updateOnePerson(this.personItem).then(result => { // 修改
-                this.showSuccessInfo(result.message)
-                this.roleShow = false
-                this.$emit('complete')
-              }) */
+          modifyUserInfo(this.personItem).then(result => {
+            if (result === 'ok') {
+              this.$message({
+                message: '修改成功'
+              })
+              this.roleShow = false
             }
-          }
+          })
         })
       },
       getFirst(that, result) { // 第一次进去获取ID

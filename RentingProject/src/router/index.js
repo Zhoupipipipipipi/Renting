@@ -78,6 +78,18 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/messageManager',
+    component: Layout,
+    children: [
+      {
+        path: 'messageManager',
+        name: 'messageManager',
+        component: () => import('@/views/messageManager/index'),
+        meta: { title: '消息管理', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: '/appointmentManager',
     component: Layout,
     children: [

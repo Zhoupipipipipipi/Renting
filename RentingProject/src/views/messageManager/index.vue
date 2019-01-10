@@ -8,8 +8,7 @@
 import TableList from '@/components/TableList/index'
 import FormBox from './formBox'
 import { ContentLayout } from '@/components/ContentLayout'
-import { Message } from 'element-ui'
-import { getOrderRoom } from '@/api/renting'
+import { getMessage } from '@/api/renting'
 // import { deleteOnePeople, getPeople } from '@/api/examPlan'
 // import html2canvas from 'html2canvas'
 
@@ -17,18 +16,9 @@ export default {
   data() {
     return {
       loading: false,
-      peopleTableList: [
-        { name: '周培',
-          houseId: '123',
-          housename: '芳村小学附近',
-          time: '2018-12-12' }
-      ],
+      peopleTableList: [],
       tableNameList: [
-        { id: 'houseName', name: '预约人姓名' },
-        { id: 'id', name: '预约房id' },
-        { id: 'userName', name: '预约房名字' },
-        { id: 'userPhone', name: '联系电话' },
-        { id: 'createTime', name: '时间' }
+        { id: 'msg', name: '消息来电' }
       ],
       currentOp: 'add',
       btnList: {
@@ -50,32 +40,6 @@ export default {
       this.$router.push({ name: 'editDetails' })
       // this.$refs.dialogPanel.show()
     },
-    delSubmit(msg) { // 删除
-      const info = this.$refs.personTable.handleSelectionChange() // 拿到选中的数据
-      if (info) {
-        const ids = []
-        info.forEach(element => {
-          ids.push(element.id)
-        })
-        /* const exam = {
-          ids: ids.join(',')
-        }
-        deleteOnePeople(exam).then((result) => {
-          Message({
-            message: result.message,
-            type: 'success'
-          })
-          this.fetchData()
-        }).catch((err) => {
-          console.log(err)
-        }) */
-      } else {
-        Message({
-          message: '请选择要删除的考试',
-          type: 'warning'
-        })
-      }
-    },
     search(msg) { // 查询
       this.xm = msg.name
       this.fetchData(1)
@@ -84,15 +48,13 @@ export default {
       if (page) {
         this.$refs.content.setPage(page)
       }
-      const role = JSON.parse(window.localStorage.getItem('userId')).role
       const userId = JSON.parse(window.localStorage.getItem('userId')).id
       const info = {
         page: !page ? this.$refs.content.getPage() : page,
         pageSize: this.$refs.content.getLimit(),
-        role: role,
         userId: userId
       }
-      getOrderRoom(info).then(result => {
+      getMessage(info).then(result => {
         console.log(result)
         this.peopleTableList = result.list
         this.$refs.content.setTotal(result.total)

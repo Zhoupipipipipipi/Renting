@@ -226,7 +226,7 @@ export default {
       }
     },
     handleAvatarSuccess(res, file) {
-      this.houseDetail.picture = URL.createObjectURL(file.raw)
+      this.houseDetail.picture = res
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'

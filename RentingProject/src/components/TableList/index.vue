@@ -23,7 +23,7 @@
           :width="btnList.width?btnList.width:'100'">
           <template slot-scope="scope">
             <el-button size="small" v-if="btnList.edit" @click="changeInfo(scope)" type="primary" icon="el-icon-edit"></el-button>
-            <el-button size="small" v-if="btnList.appointment" @click="dealStatusInfo(scope)" type="primary">确认</el-button>
+            <el-button size="small" v-if="btnList.appointment" @click="sureOrder(scope)" type="primary">确认</el-button>
           </template>
         </el-table-column>        
     </el-table>
@@ -59,6 +59,10 @@ export default {
     },
     checkPic(item) { // 查看试卷登记表图片
       this.$emit('checkPic', item.row)
+    },
+    sureOrder(item) { // 确认预约
+      console.log(item)
+      this.$emit('sureOrder', item.row)
     }
   }
 }
