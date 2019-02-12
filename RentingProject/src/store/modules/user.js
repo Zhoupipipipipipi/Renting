@@ -66,6 +66,7 @@ const user = {
           commit('SET_NAME', data.phone)
           commit('SET_USER', data)
           commit('SET_AVATAR', data.avatar)
+          setStroage('userId', JSON.stringify(data))
           resolve(response)
         }).catch(error => {
           reject(error)

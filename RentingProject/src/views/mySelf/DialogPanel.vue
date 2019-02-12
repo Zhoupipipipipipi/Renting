@@ -50,6 +50,8 @@
   // import { addOnePerson, updateOnePerson } from '@/api/examPlan'
   // import { getCity } from '@/api/escorting'
   import { modifyUserInfo } from '@/api/renting'
+import { setStroage } from '@/utils/auth'
+
   export default {
     name: 'DialogPanel',
     data() {
@@ -123,85 +125,12 @@
               this.$message({
                 message: '修改成功'
               })
+              setStroage('userId', JSON.stringify(this.personItem))
               this.roleShow = false
+              location.reload()
             }
           })
         })
-      },
-      getFirst(that, result) { // 第一次进去获取ID
-        that.id = result.data[0].id
-      },
-      addAddress(that, result) { // 第一次获取相关地址
-        const options = result.data
-        const department = this.$store.state.user.department
-        const dpType = department.dpType
-        switch (dpType) {
-          case '1':
-            this.city.options = options
-            break
-          case '2':
-            this.city.options = [
-              { addressCode: department.addressCode, addressName: department.addressName, id: this.id }
-            ]
-            this.city.value = ''
-            this.area.options = options
-            break
-          case '3':
-            this.city.show = false
-            this.area.options = [
-              { addressCode: department.addressCode, addressName: department.addressName, id: this.id }
-            ]
-            this.area.value = ''
-            break
-        }
-      },
-      async getAboutCity(id, callback) { // 获取相关地区的下拉列表action
-        /* const that = this
-        const info = {
-          id: id
-        } */
-        /* await getCity(info).then(result => {
-          callback(that, result)
-        }).catch(err => {
-          console.log(err)
-        }) */
-      },
-      changeCity(val) { // 选择城市
-        const info = {
-          id: val.id,
-          type: '2'
-        }
-        this.dpType = info.type
-        this.id = info.id
-        this.getAboutCity(this.id, this.changeAddress)
-      },
-      changeArea(val) { // 选择区
-        const info = {
-          id: val.id,
-          type: '3'
-        }
-        this.dpType = info.type
-        this.id = info.id
-        this.getAboutCity(this.id, this.changeAddress)
-      },
-      changeAddress(that, result) { // 修改获取相关下拉列表
-        const options = result.data
-        switch (this.dpType) {
-          case '1':
-            this.city.value = ''
-            this.city.options = options
-            break
-          case '2':
-            this.area.value = ''
-            this.area.options = options
-            this.personItem.adminArea = this.city.value.addressName
-            this.personItem.areaNumber = this.city.value.addressCode
-            break
-          case '3':
-            this.personItem.adminArea = this.city.value.addressName ? this.city.value.addressName + '-' + this.area.value.addressName : this.area.value.addressName
-            this.personItem.areaNumber = this.area.value.addressCode
-            break
-        }
       }
     }
   }
