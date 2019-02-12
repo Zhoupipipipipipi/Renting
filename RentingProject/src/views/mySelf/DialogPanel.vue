@@ -31,26 +31,8 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="性别" prop="sex">
-                <el-input v-model="personItem.sex" placeholder="性别"></el-input>
-              </el-form-item>
-            </el-col>
-          </div>
-          <div class="item">
-            <el-col :span="12">
-              <el-form-item label="角色" prop="role">
-                <el-input v-model="personItem.role" placeholder="角色"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="头像" prop="avatar">
-                <el-select v-model="city.value" v-if="city.show" placeholder="请选择市" class="item-search" @change="changeCity" value-key="id" style="width:100px">
-                    <el-option
-                    v-for="item in city.options"
-                    :key="item.id"
-                    :label="item.addressName"
-                    :value="{id:item.id, addressCode:item.addressCode, addressName:item.addressName}">
-                    </el-option>
-                </el-select>
+                <el-radio v-model="personItem.sex" label="0">男</el-radio>
+                <el-radio v-model="personItem.sex" label="1">女</el-radio>
               </el-form-item>
             </el-col>
           </div>
@@ -131,6 +113,7 @@
       show(item) { // 弹出框显示
         this.roleShow = true
         this.personItem = this.$store.state.user.user
+        this.personItem.sex = this.personItem.sex.toString()
         console.log(this.personItem)
       },
       submitAddForm() { // 提交表单

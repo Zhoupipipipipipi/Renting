@@ -61,7 +61,7 @@ export default {
       selectedOptions: ['440000', '441200'],
       CityName: '',
       CityList: [],
-      userName: this.$store.state.user.name
+      userName: JSON.parse(localStorage.getItem('userId')) ? JSON.parse(localStorage.getItem('userId')).nickName : ''
     }
   },
   mounted() {

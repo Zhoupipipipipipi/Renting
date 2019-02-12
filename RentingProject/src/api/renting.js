@@ -58,7 +58,7 @@ export function getOrderRoom(data) { // 获取预约列表
   })
 }
 
-export function sureOrder(data) { // 获取预约列表
+export function sureOrder(data) { // 更新预约列表
   return request({
     url: '/api/auth/order',
     method: 'put',
@@ -66,7 +66,7 @@ export function sureOrder(data) { // 获取预约列表
   })
 }
 
-export function getMessage(data) { // 获取预约列表
+export function getMessage(data) { // 获取消息列表
   return request({
     url: '/api/auth/msg',
     method: 'get',
@@ -74,7 +74,7 @@ export function getMessage(data) { // 获取预约列表
   })
 }
 
-export function modifyUserInfo(data) { // 获取预约列表
+export function modifyUserInfo(data) { // 更改用户信息
   return request({
     url: '/api/auth/user',
     method: 'put',

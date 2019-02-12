@@ -9,7 +9,7 @@
                     <div class="member-info left">
                         <p class="f18 c-333 mt6 mb6">您 好，{{$store.state.user.user.nickName}}</p>
                         <p class="f12 c-333 mb10">手机号码：{{$store.state.user.user.phone}}</p>
-                        <div class="f12 c-ff7d2f" @click="changeMyInfo">修改信息</div>
+                        <div class="f12 c-ff7d2f change-info" @click="changeMyInfo">修改信息</div>
                     </div>
                 </div>
                 <div class="num tcenter left">
@@ -25,11 +25,11 @@
         <div class="member-right main">
             <div class="member-rt clearfix">
                 <div class="tabs clearfix left">
-                    <a href="/member/like/fang" class="tab active">预约的房源</a>
-                    <a href="/member/like/fang" class="tab active">消息来电</a>
+                    <span :class="tabName=='yuyue'?'tab active':'tab'" @click="getOrderRoom">预约的房源</span>
+                    <span :class="tabName=='xiaoxi'?'tab active':'tab'" @click="getXiaoXi">消息来电</span>
                 </div>
             </div>
-            <table class="member-table">
+            <table class="member-table" v-if="tabName=='yuyue'">
                 <thead>
                     <tr>
                         <th class="tleft">房屋信息</th>
@@ -66,15 +66,32 @@
                     </tr>
                 </tbody>
             </table>
+            <table class="member-table" v-if="tabName=='xiaoxi'">
+                <thead>
+                    <tr>
+                        <th class="tleft">预约消息</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in infoList" :key="item.id">
+                        <td class="house-info-td">
+                            {{item.msg}}
+                        </td>
+                        <td class="tcenter">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <input type="hidden" name="type" id="type" value="fang">
-            <ul class="page"><li><a href="https://zuke.com/member/like/fang?page=1" class="first">首页</a></li><li><a href="https://zuke.com/member/like/fang?page=1" class="previous">上一页</a></li><li><a href="javascript:;" class="item active">1</a></li><li><a href="https://zuke.com/member/like/fang?page=1" class="next">下一页</a></li><li><a href="https://zuke.com/member/like/fang?page=1" class="last">末页</a></li></ul>        
+            <!-- <ul class="page"><li><a href="https://zuke.com/member/like/fang?page=1" class="first">首页</a></li><li><a href="https://zuke.com/member/like/fang?page=1" class="previous">上一页</a></li><li><a href="javascript:;" class="item active">1</a></li><li><a href="https://zuke.com/member/like/fang?page=1" class="next">下一页</a></li><li><a href="https://zuke.com/member/like/fang?page=1" class="last">末页</a></li></ul>         -->
         </div>
         <dialog-panel ref="dialogPanel"/>
     </div>
 </template>
 <script>
 import DialogPanel from './DialogPanel'
-import { getOrderRoom } from '@/api/renting'
+import { getOrderRoom, getMessage } from '@/api/renting'
 import { formatDate } from '@/utils/validate.js'
 
 export default {
@@ -114,7 +131,9 @@ export default {
           date: '12-10',
           describe: '学校附近，有电梯'
         }
-      ]
+      ],
+      tabName: 'yuyue',
+      infoList: []
     }
   },
   mounted() {
@@ -127,11 +146,11 @@ export default {
     changeMyInfo() {
       this.$refs.dialogPanel.show()
     },
-    getOrderRoom() {
-      console.log(this.$store.state)
+    getOrderRoom() { // 获取订单
+      this.tabName = 'yuyue'
       const info = {
         page: 1,
-        pageSize: 25,
+        pageSize: 100,
         role: 0,
         userId: this.$store.state.user.user.id
       }
@@ -140,6 +159,18 @@ export default {
         this.houseList.forEach(element => {
           element.createTime = formatDate(new Date(element.createTime), 'yyyy-MM-dd')
         })
+      })
+    },
+    getXiaoXi() { // 获取消息列表
+      this.tabName = 'xiaoxi'
+      const userId = JSON.parse(window.localStorage.getItem('userId')).id
+      const info = {
+        page: 1,
+        pageSize: 100,
+        userId: userId
+      }
+      getMessage(info).then(result => {
+        this.infoList = result.list
       })
     }
   }
@@ -226,4 +257,5 @@ export default {
 .member-right .member-rt .fabu-contract-box:before { content: ''; position: absolute; left: 50%; top: -9px; margin-left: -7px; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 6px solid #aaa; filter: blur(2px); }
 .member-right .member-rt .fabu-contract-box a { display: block; margin-bottom: 14px; font-size: 14px; color: #333; text-align: center; }
 .member-right .member-rt .fabu-contract-box a:hover { color: #3fabfa; }
+.change-info{ cursor: pointer; }
 </style>
