@@ -114,10 +114,7 @@
         <p class="f16 c-333 bold mtb20 plr20">图片观看</p>
         <div class="pic-big-list mtb20 plr20">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img class="zooming-switch" src="https://img2.zuke.com/u/1001319/2018103115370338238_600_432.jpg" data-src="https://img2.zuke.com/u/1001319/2018103115370338238.jpg" alt=""></div>
-                <div class="swiper-slide"><img class="zooming-switch" src="https://img2.zuke.com/u/1001319/2018103115370967780_600_432.jpg" data-src="https://img2.zuke.com/u/1001319/2018103115370967780.jpg" alt=""></div>
-                <div class="swiper-slide"><img class="zooming-switch" src="https://img2.zuke.com/u/1001319/2018103115371486956_600_432.jpg" data-src="https://img2.zuke.com/u/1001319/2018103115371486956.jpg" alt=""></div>
-                <div class="swiper-slide"><img class="zooming-switch" src="https://img2.zuke.com/u/1001319/2018103115371949464_600_432.jpg" data-src="https://img2.zuke.com/u/1001319/2018103115371949464.jpg" alt=""></div>
+                <div class="swiper-slide" v-for="item in houseDetail.files" :key="item"><img class="zooming-switch" :src="item" alt=""></div>                
             </div>
         </div>
     </div>

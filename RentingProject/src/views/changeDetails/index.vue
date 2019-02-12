@@ -21,7 +21,7 @@
         <div class="main-info clearfix">
             <div class="carousel clearfix left">
                 <div class="swiper-slide swiper-slide-active" style="width: 100%;">
-                    <img class="zooming-switch" :src="houseDetail.picture" alt="">
+                    <!-- <img class="zooming-switch" :src="houseDetail.picture" alt=""> -->
                     <el-upload
                     class="avatar-uploader"
                     action="/renting/api/auth/upload"
@@ -137,10 +137,18 @@
         <p class="f16 c-333 bold mtb20 plr20">图片观看</p>
         <div class="pic-big-list mtb20 plr20">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img class="zooming-switch" src="https://img2.zuke.com/u/1001319/2018103115370338238_600_432.jpg" data-src="https://img2.zuke.com/u/1001319/2018103115370338238.jpg" alt=""></div>
-                <div class="swiper-slide"><img class="zooming-switch" src="https://img2.zuke.com/u/1001319/2018103115370967780_600_432.jpg" data-src="https://img2.zuke.com/u/1001319/2018103115370967780.jpg" alt=""></div>
-                <div class="swiper-slide"><img class="zooming-switch" src="https://img2.zuke.com/u/1001319/2018103115371486956_600_432.jpg" data-src="https://img2.zuke.com/u/1001319/2018103115371486956.jpg" alt=""></div>
-                <div class="swiper-slide"><img class="zooming-switch" src="https://img2.zuke.com/u/1001319/2018103115371949464_600_432.jpg" data-src="https://img2.zuke.com/u/1001319/2018103115371949464.jpg" alt=""></div>
+                <el-upload
+                    action="/renting/api/auth/upload"
+                    list-type="picture-card"
+                    :on-remove="handleRemove"
+                    :data="uploadData"
+                    :show-file-list="false"
+                    :headers="tokenInfo"
+                    :on-success="uploadSuccess"
+                    :before-upload="beforeAvatarUpload">
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+                <div class="swiper-slide" v-for="item in houseDetail.files" :key="item"><img class="zooming-switch" :src="item" alt=""></div>
             </div>
         </div>
     </div>
@@ -207,7 +215,7 @@ export default {
         editHouse(this.houseDetail).then(result => {
           if (result === 'ok') {
             Message({
-              message: '添加成功',
+              message: '修改成功',
               type: 'success'
             })
             this.$router.go(-1)
@@ -229,16 +237,17 @@ export default {
       this.houseDetail.picture = res
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M
+      return isLt2M
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    uploadSuccess(res, file) {
+      this.houseDetail.files.push(res)
     }
   }
 }
@@ -411,5 +420,9 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+  }
+  .avatar-uploader .el-upload, .avatar-uploader, .swiper-slide-active img{
+      width: 100%; 
+      height: 100%;
   }
 </style>
