@@ -1,5 +1,5 @@
-import { logout, getInfo, login } from '@/api/login'
-import { getToken, setToken, removeToken, setStroage } from '@/utils/auth'
+import { getInfo, login } from '@/api/login'
+import { getToken, setToken, removeToken, setStroage, removeStroage } from '@/utils/auth'
 import { Message } from 'element-ui'
 
 const user = {
@@ -76,14 +76,12 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          removeToken()
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
+        commit('SET_USER', [])
+        removeStroage('userId')
+        removeToken()
+        resolve()
       })
     },
 

@@ -17,3 +17,7 @@ export function removeToken() {
 export function setStroage(name, data) {
   window.localStorage.setItem(name, data)
 }
+
+export function removeStroage(name) {
+  window.localStorage.removeItem(name)
+}

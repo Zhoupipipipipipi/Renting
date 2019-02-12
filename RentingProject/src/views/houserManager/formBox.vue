@@ -12,12 +12,6 @@
         <el-form-item>
             <el-button type="primary" @click="delSubmit">删除</el-button>
         </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="exportInfo">批量导出</el-button>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="printing">打印</el-button>
-        </el-form-item>
     </el-form>
 </template>
 <script>
@@ -38,12 +32,6 @@ export default {
     },
     search(page) { // 查询
       this.$emit('search', this.formInline)
-    },
-    printing() { // 打印
-      this.$emit('printing', true)
-    },
-    exportInfo() { // 导出
-      this.$emit('exportInfo', true)
     }
   }
 }

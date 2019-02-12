@@ -36,14 +36,14 @@
                         <div class="criteria-item clearfix" name="area">
                             <span class="left">热门区域</span>
                             <div class="left">
-                                <span class="area-box" v-for="(item, $index) in search.area" :key="item.id" v-if="$index<10||showMore" @click="changeSearch('university', item.name)">{{item.name}}</span>
-                                <span @click="showAny" class="show-more">更多</span>
+                                <span class="area-box" v-for="(item, $index) in search.area" :key="item.id" v-show="$index<10" @click="changeSearch('university', item.name)" :class="item.name === search.university?'blue-font':''">{{item.name}}</span>
+                                <span @click="cleanAny" class="show-more">清除</span>
                             </div>
                         </div>
                         <div class="criteria-item clearfix">
                             <span class="left">租金</span>
                             <div class="left">
-                                <span class="area-box" to="" v-for="item in search.money" :key="item.id" @click="changeSearch('price', item)">{{item.name}}</span>
+                                <span class="area-box" to="" v-for="item in search.money" :key="item.id" @click="changeSearch('price', item)" :class="item.name === search.price1+'-'+search.price2+'元'?'blue-font':''">{{item.name}}</span>
                                 <span class="range middle">
                         <input class="fang-rentstart" type="text" value="">
                         <span class="f14 c-333 ml8">-</span>
@@ -55,7 +55,7 @@
                         <div class="criteria-item clearfix">
                             <span class="left">户型</span>
                             <div class="left">
-                                <span class="area-box" to="" v-for="item in search.roomType" :key="item.id"  @click="changeSearch('apartment', item.name)">{{item.name}}</span>
+                                <span class="area-box" to="" v-for="item in search.roomType" :key="item.id"  @click="changeSearch('apartment', item.name)" :class="item.name == search.apartment?'blue-font':''">{{item.name}}</span>
                             </div>
                         </div>
                     </div>
@@ -135,13 +135,13 @@ export default {
       this.searchSchool = item.name
       this.search.searchList = []
     },
-    showAny() {
-      console.log('!!!!')
-      this.showMore = !this.showMore
+    cleanAny() {
+      this.search.university = ''
     },
     CityToSchool() {
       CityToSchool(this.CityName).then(result => {
         this.search.area = result
+        this.search.university = ''
       })
     },
     changeSearch(key, value) { // 修改查询条件
@@ -339,5 +339,8 @@ z-index: 5; padding: 0 0 0 4px; width: 204px; height: 36px; background-color: #f
     color: #333;
     float: left; 
     cursor: pointer;
+}
+.blue-font{
+    color: #0C9DF9;
 }
 </style>

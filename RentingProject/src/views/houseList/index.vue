@@ -2,12 +2,12 @@
     <div class="list-box bg-f9f9f9 main mt6">
         <div class="list">
             <div class="list-result">
-                <span class="f14 c-333">共有<span class="c-ff5555">119</span>套符合您要求的房源</span>
+                <span class="f14 c-333">共有<span class="c-ff5555">{{total}}</span>套符合您要求的房源</span>
                 <div class="sort right">
                     <a href="/fang?district=&amp;region=&amp;line=&amp;station=&amp;bedroom=1&amp;rentstart=&amp;rentend=&amp;squarestart=&amp;squareend=&amp;characteristic=&amp;decoration=&amp;orientation=&amp;floor=&amp;xq=&amp;search=&amp;order=" class="active">默认</a>
-                    <a href="/fang?district=&amp;region=&amp;line=&amp;station=&amp;bedroom=1&amp;rentstart=&amp;rentend=&amp;squarestart=&amp;squareend=&amp;characteristic=&amp;decoration=&amp;orientation=&amp;floor=&amp;xq=&amp;search=&amp;order=newDesc">最新</a>
+                    <!--a href="/fang?district=&amp;region=&amp;line=&amp;station=&amp;bedroom=1&amp;rentstart=&amp;rentend=&amp;squarestart=&amp;squareend=&amp;characteristic=&amp;decoration=&amp;orientation=&amp;floor=&amp;xq=&amp;search=&amp;order=newDesc">最新</a>
                     <a href="/fang?district=&amp;region=&amp;line=&amp;station=&amp;bedroom=1&amp;rentstart=&amp;rentend=&amp;squarestart=&amp;squareend=&amp;characteristic=&amp;decoration=&amp;orientation=&amp;floor=&amp;xq=&amp;search=&amp;order=rentDesc">价格<i class="icon down-arrow-icon"></i></a>
-                    <a href="/fang?district=&amp;region=&amp;line=&amp;station=&amp;bedroom=1&amp;rentstart=&amp;rentend=&amp;squarestart=&amp;squareend=&amp;characteristic=&amp;decoration=&amp;orientation=&amp;floor=&amp;xq=&amp;search=&amp;order=squareDesc">面积<i class="icon down-arrow-icon"></i></a>
+                    <a href="/fang?district=&amp;region=&amp;line=&amp;station=&amp;bedroom=1&amp;rentstart=&amp;rentend=&amp;squarestart=&amp;squareend=&amp;characteristic=&amp;decoration=&amp;orientation=&amp;floor=&amp;xq=&amp;search=&amp;order=squareDesc">面积<i class="icon down-arrow-icon"></i></a-->
                 </div>
             </div>
             <router-link :to="'/details/'+item.id" class="list-item clearfix"  v-for="item in houseList" :key="item.id">
@@ -26,7 +26,12 @@
                     </p>
                 </div>
             </router-link>
-            <ul class="page"><li><a href="https://zuke.com/fang?bedroom=1&amp;page=1" class="first">首页</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=1" class="previous">上一页</a></li><li><a href="javascript:;" class="item active">1</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=2" class="item">2</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=3" class="item">3</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=4" class="item">4</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=5" class="item">5</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=6" class="item">6</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=7" class="item">7</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=8" class="item">8</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=9" class="item">9</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=2" class="next">下一页</a></li><li><a href="https://zuke.com/fang?bedroom=1&amp;page=12" class="last">末页</a></li></ul>        
+            <ul class="page" style="margin-top:20px;">
+              <el-pagination
+              layout="prev, pager, next" :page-size="10" background @current-change="changePage"
+              :total="total">
+              </el-pagination>
+            </ul>        
         </div>  
         <div class="rcmd-list">
             <p class="mtb12 f18 c-333">推荐房源</p>
@@ -46,40 +51,9 @@ import { getHouseList } from '@/api/renting'
 export default {
   data() {
     return {
+      total: 0,
+      page: 1,
       houseList: [
-        {
-          housenumber: 1,
-          housename: '新秀地铁站附近 芳春花园小区',
-          picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
-          area: '15',
-          apartment: '1室0厅1卫',
-          price: '1200',
-          address: '芳春花园',
-          date: '12-10',
-          describe: '学校附近，有电梯'
-        },
-        {
-          housenumber: 2,
-          housename: '新秀地铁站附近 芳春花园小区',
-          picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
-          area: '15',
-          apartment: '1室0厅1卫',
-          price: '1200',
-          address: '芳春花园',
-          date: '12-10',
-          describe: '学校附近，有电梯'
-        },
-        {
-          housenumber: 3,
-          housename: '新秀地铁站附近 芳春花园小区',
-          picture: 'https://img2.zuke.com/u/1338011/2018121014243197847_220_158.jpg',
-          area: '15',
-          apartment: '1室0厅1卫',
-          price: '1200',
-          address: '芳春花园',
-          date: '12-10',
-          describe: '学校附近，有电梯'
-        }
       ],
       recommendHouseList: [
         {
@@ -127,6 +101,7 @@ export default {
   watch: {
     search: {
       handler: function(newVal) {
+        this.page = 1
         this.getHouseList()
       },
       deep: true
@@ -135,8 +110,8 @@ export default {
   methods: {
     getHouseList() {
       const info = {
-        page: 1,
-        pageSize: 25,
+        page: this.page,
+        pageSize: 10,
         userId: '',
         area: '',
         university: this.search.university ? this.search.university : null, // 学校
@@ -147,7 +122,12 @@ export default {
       }
       getHouseList(info).then(result => {
         this.houseList = result.list
+        this.total = result.total
       })
+    },
+    changePage(val) {
+      this.page = val
+      this.getHouseList()
     }
   }
 }

@@ -14,7 +14,7 @@
                         <li class="c-3fabfa">
                             <router-link to="/">首页</router-link>
                         </li>
-                        <li>
+                        <!-- <li>
                             <router-link to="/houseList">租房</router-link>
                         </li>
                         <li>
@@ -22,7 +22,7 @@
                         </li>
                         <li>
                             <router-link to="">个人中心</router-link>
-                        </li>
+                        </li> -->
                     </ul>
                         <span v-if="userName" class="left f16 c-333">
                             <span class="nav-log">
@@ -75,7 +75,6 @@ export default {
       this.showRegister = false
     },
     handleChange(value) {
-      console.log(value)
       if (CodeToText[value[1]] === '市辖区') {
         this.CityName = CodeToText[value[0]]
       } else {
@@ -84,7 +83,10 @@ export default {
       this.$router.push({ name: 'index', params: { CityName: this.CityName }})
     },
     logout() {
-      this.$store.dispatch('LogOut')
+      this.$store.dispatch('LogOut').then(result => {
+        this.$router.push({ path: '/index/肇庆市' })
+        location.reload()
+      })
     }
   }
 }

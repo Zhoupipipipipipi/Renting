@@ -1,6 +1,6 @@
 <template>
     <content-layout ref="content" @pageChange="fetchData()" @limitChange="fetchData()">
-      <form-box slot="formSearch" @add="addSubmit($event)" @del="delSubmit($event)" @search="search($event)" @printing="printing($event)" @exportInfo="exportInfo($event)"></form-box>
+      <!-- <form-box slot="formSearch" @add="addSubmit($event)" @del="delSubmit($event)" @search="search($event)" @printing="printing($event)" @exportInfo="exportInfo($event)"></form-box> -->
       <table-list ref="personTable" id="personTable" :loading="loading" :tableList="peopleTableList" :tableNameList="tableNameList" :btnList="btnList" @changeItem="changeInfo($event)" slot="tbCont"></table-list>
     </content-layout>
 </template>
