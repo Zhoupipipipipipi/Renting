@@ -36,6 +36,7 @@
                         <th>价格</th>
                         <th>状态</th>
                         <th>预约时间</th>
+                        <th>房东联系电话</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -56,9 +57,13 @@
                             <p class="tcenter f14 c-ff5555">{{item.price}}元/月</p>
                         </td>
                         <td class="num-td">
-                            <p class="tcenter f14 c-333">可租</p></td>
+                            <p class="tcenter f14 c-333" v-if="item.status==0">可租</p>
+                            <p class="tcenter f14 c-333" v-if="item.status==1">不可租</p></td>
                         <td class="time-td tcenter">
                             <p class="c-333 f14">{{item.createTime}}</p>
+                        </td>
+                        <td class="time-td tcenter">
+                            <p class="c-333 f14">{{item.userPhone}}</p>
                         </td>
                         <td class="tcenter">
                             <p class="del f14 c-3fabfa cursor-pointer" data-id="835">删除</p>
@@ -156,6 +161,7 @@ export default {
       }
       getOrderRoom(info).then(result => {
         this.houseList = result.list
+        console.log(this.houseList)
         this.houseList.forEach(element => {
           element.createTime = formatDate(new Date(element.createTime), 'yyyy-MM-dd')
         })

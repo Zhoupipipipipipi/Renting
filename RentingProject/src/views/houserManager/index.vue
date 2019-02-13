@@ -111,7 +111,6 @@ export default {
         area: ''
       }
       getHouseList(info).then((result) => {
-        console.log(result)
         this.peopleTableList = result.list
         this.$refs.content.setTotal(result.total)
       }).catch((err) => {

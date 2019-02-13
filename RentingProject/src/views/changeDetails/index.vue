@@ -87,7 +87,7 @@
                 </div>
                 <div class="customer-hot-line middle">
                     <span class="f16 c-333">咨询热线：</span>
-                    <span class="f16 c-ff5555"><el-input v-model="houseDetail.phonenumber" placeholder="电话号码" size="mini" style="width: 120px; margin-right: 10px;"></el-input></span>
+                    <span class="f16 c-ff5555"><el-input v-model="houseDetail.telephone" placeholder="电话号码" size="mini" style="width: 120px; margin-right: 10px;"></el-input></span>
                 </div>
                 <el-button type="danger" @click="commit">确认</el-button>
             </div>
@@ -180,7 +180,7 @@ export default {
         floor: '',
         payType: '',
         userId: this.$store.state.user.user.id,
-        phonenumber: '',
+        telephone: this.$store.state.user.name,
         university: '',
         orderFlag: 0
       },
@@ -206,6 +206,7 @@ export default {
       this.id = this.$route.params.id
       if (this.id) {
         getOneHouseInfo(this.id).then(result => {
+          console.log(result)
           this.houseDetail = result
         })
       }

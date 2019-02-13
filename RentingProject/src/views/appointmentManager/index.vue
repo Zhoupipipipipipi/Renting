@@ -24,9 +24,9 @@ export default {
           time: '2018-12-12' }
       ],
       tableNameList: [
-        { id: 'houseName', name: '预约人姓名' },
-        { id: 'id', name: '预约房id' },
-        { id: 'userName', name: '预约房名字' },
+        { id: 'id', name: '预约订单编号' },
+        { id: 'userName', name: '预约人姓名' },
+        { id: 'houseName', name: '预约房名字' },
         { id: 'userPhone', name: '联系电话' },
         { id: 'createTime', name: '时间' }
       ],
@@ -93,8 +93,8 @@ export default {
         userId: userId
       }
       getOrderRoom(info).then(result => {
-        console.log(result)
         this.peopleTableList = result.list
+        console.log(this.peopleTableList)
         this.$refs.content.setTotal(result.total)
       })
       /* this.loading = true
