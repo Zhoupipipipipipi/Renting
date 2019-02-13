@@ -71,7 +71,7 @@
                     </p>
                     <p>
                         <span class="f14"><span class="c-999">学校：</span><span class="c-333"><el-input v-model="houseDetail.university" placeholder="编号" size="mini" style="width: 100px;"></el-input></span></span>
-                        <span class="f14"><span class="c-999">区域：</span><span class="c-333"><el-input v-model="houseDetail.region" placeholder="区域：" size="mini" style="width: 150px;"></el-input></span></span>
+                        <span class="f14"><span class="c-999">区域：</span><span class="c-333"><el-input v-model="houseDetail.region" placeholder="区域" size="mini" style="width: 150px;"></el-input></span></span>
                     </p>
                     <div class="addr f14 clearfix"><span class="c-999 left">地址：</span><span class="c-333 left"><el-input v-model="houseDetail.address" placeholder="地址" size="mini" style="width: 200px;"></el-input></span></div>
                 </div>

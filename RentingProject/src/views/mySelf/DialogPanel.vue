@@ -14,12 +14,12 @@
           <div class="item">
             <el-col :span="12">
               <el-form-item label="密码" prop="password">
-                <el-input v-model="personItem.password" placeholder="密码"></el-input>
+                <el-input v-model="personItem.password" placeholder="密码" type="password"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="确认密码" prop="surePass">
-                <el-input v-model="personItem.surePass" placeholder="确认密码"></el-input>
+                <el-input v-model="personItem.surePass" placeholder="确认密码" type="password"></el-input>
               </el-form-item>
             </el-col>
           </div>
@@ -55,11 +55,36 @@ import { setStroage } from '@/utils/auth'
   export default {
     name: 'DialogPanel',
     data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'))
+        } else {
+          if (this.personItem.surePass !== '') {
+            this.$refs.personItem.validateField('surePass')
+          }
+          callback()
+        }
+      }
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'))
+        } else if (value !== this.personItem.password) {
+          callback(new Error('两次输入密码不一致!'))
+        } else {
+          callback()
+        }
+      }
       return {
         title: '',
         roleShow: false,
         ssdqFormShow: false, // 是否显示地区选择
         rules: {
+          password: [
+            { required: true, validator: validatePass, trigger: 'blur' }
+          ],
+          surePass: [
+            { required: true, validator: validatePass2, trigger: 'blur' }
+          ]
         },
         personItem: {
         },
@@ -120,16 +145,19 @@ import { setStroage } from '@/utils/auth'
       },
       submitAddForm() { // 提交表单
         this.$refs.personItem.validate(result => {
-          modifyUserInfo(this.personItem).then(result => {
-            if (result === 'ok') {
-              this.$message({
-                message: '修改成功'
-              })
-              setStroage('userId', JSON.stringify(this.personItem))
-              this.roleShow = false
-              location.reload()
-            }
-          })
+          console.log(result)
+          if (result) {
+            modifyUserInfo(this.personItem).then(result => {
+              if (result === 'ok') {
+                this.$message({
+                  message: '修改成功'
+                })
+                setStroage('userId', JSON.stringify(this.personItem))
+                this.roleShow = false
+                location.reload()
+              }
+            })
+          }
         })
       }
     }
