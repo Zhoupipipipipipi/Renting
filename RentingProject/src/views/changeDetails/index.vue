@@ -70,8 +70,23 @@
                         <span class="f14"><span class="c-999">楼层：</span><span class="c-333"><el-input v-model="houseDetail.floor" placeholder="楼层" size="mini" style="width: 50px; margin-right: 10px;"></el-input>层 </span></span>
                     </p>
                     <p>
-                        <span class="f14"><span class="c-999">学校：</span><span class="c-333"><el-input v-model="houseDetail.university" placeholder="编号" size="mini" style="width: 100px;"></el-input></span></span>
-                        <span class="f14"><span class="c-999">区域：</span><span class="c-333"><el-input v-model="houseDetail.region" placeholder="区域" size="mini" style="width: 150px;"></el-input></span></span>
+                        <span class="f14"><span class="c-999">区域：</span><span class="c-333">
+                            {{houseDetail.region}}
+                            <!-- <el-input v-model="houseDetail.region" placeholder="区域" size="mini" style="width: 150px;"></el-input> -->
+                            <el-cascader class="nav-city left" size="mini" :options="options" v-model="selectedOptions"  @change="handleChange">
+                            </el-cascader>
+                        </span></span>
+                        <span class="f14"><span class="c-999">学校：</span><span class="c-333">
+                            <!-- <el-input v-model="houseDetail.university" placeholder="编号" size="mini" style="width: 100px;"></el-input> -->
+                            <el-select v-model="houseDetail.university" placeholder="请选择方式" size="mini" style="width: 100px;">
+                                <el-option
+                                v-for="item in universityOptions"
+                                :key="item.name"
+                                :label="item.name"
+                                :value="item.name">
+                                </el-option>
+                            </el-select>
+                        </span></span>
                     </p>
                     <div class="addr f14 clearfix"><span class="c-999 left">地址：</span><span class="c-333 left"><el-input v-model="houseDetail.address" placeholder="地址" size="mini" style="width: 200px;"></el-input></span></div>
                 </div>
@@ -155,6 +170,8 @@
 </template>
 <script>
 import { getOneHouseInfo, addHouse, editHouse } from '@/api/renting'
+import { provinceAndCityData, CodeToText } from 'element-china-area-data'
+import { CityToSchool } from '@/api/index'
 import { Message } from 'element-ui'
 export default {
   data() {
@@ -194,7 +211,11 @@ export default {
       payOptions: [
         { value: '押二付一' },
         { value: '押一付一' }
-      ]
+      ],
+      options: provinceAndCityData,
+      selectedOptions: ['440000', '441200'],
+      CityName: '',
+      universityOptions: []
     }
   },
   mounted() {
@@ -208,6 +229,7 @@ export default {
         getOneHouseInfo(this.id).then(result => {
           console.log(result)
           this.houseDetail = result
+        //   this.selectedOptions = 'xxxx'
         })
       }
     },
@@ -249,6 +271,20 @@ export default {
     },
     uploadSuccess(res, file) {
       this.houseDetail.files.push(res)
+    },
+    handleChange(value) {
+      if (CodeToText[value[1]] === '市辖区') {
+        this.CityName = CodeToText[value[0]]
+        this.houseDetail.region = CodeToText[value[0]]
+      } else {
+        this.CityName = CodeToText[value[1]]
+        this.houseDetail.region = CodeToText[value[1]]
+      }
+      CityToSchool(this.CityName).then(result => {
+        console.log(result)
+        this.universityOptions = result
+        this.houseDetail.university = ''
+      })
     }
   }
 }
