@@ -229,6 +229,10 @@ export default {
         getOneHouseInfo(this.id).then(result => {
           console.log(result)
           this.houseDetail = result
+          CityToSchool(this.houseDetail.region).then(result => {
+            console.log(result)
+            this.universityOptions = result
+          })
         //   this.selectedOptions = 'xxxx'
         })
       }
